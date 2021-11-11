@@ -1,6 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
-#include <cstring>
+#include <string.h>
 #include <math.h>
 
 #include "binConv.h"
@@ -38,10 +38,29 @@ void freeBinaryNumber(BinaryNumber* binNumber)
 	free(binNumber);
 }
 
+int BinStringtoBinaryNumber(char binaryString[], BinaryNumber* binNumber)
+{
+	if(binaryString == NULL)
+		return 101; // INVALID_INPUT_PARAMETER
+	if(strlen(binaryString) < bitSize)
+		return 101; // INVALID_INPUT_PARAMETER
+	if(binNumber == NULL)
+		binNumber = createBinaryNumber('x');
+
+	memcpy(binNumber->binaryNo, binaryString, strlen(binaryString)+1);
+	return 100; // SUCCESS
+}
+
+int BinaryNumbertoBinString(char* binaryString, BinaryNumber* binNumber)
+{
+	memcpy(binaryString, binNumber->binaryNo, sizeof(binNumber->binaryNo)+1);
+	return 100; // SUCCESS
+}
+
 int convertBINtoDEC(BinaryNumber* binNumber)
 {
 	if(binNumber == NULL)
-		binNumber=createBinaryNumber('x');
+		binNumber = createBinaryNumber('x');
 
 	int decimalNumber=0;
 	int row = bitSize - (bitSize-1);
