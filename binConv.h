@@ -10,8 +10,8 @@ typedef struct binNumber
 	Bit binaryNo[bitSize];
 }	BinaryNumber;
 
-BinaryNumber* createBinaryNumber(Bit defaultBit);
-void displayBinaryBumber(BinaryNumber* binNumber);
+BinaryNumber* createBinaryNumber(char defaultBit);
+void displayBinaryNumber(BinaryNumber* binNumber);
 void freeBinaryNumber(BinaryNumber* binNumber);
 
 int convertBINtoDEC(BinaryNumber* binNumber);

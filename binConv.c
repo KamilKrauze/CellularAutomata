@@ -24,7 +24,9 @@ void displayBinaryNumber(BinaryNumber* binNumber)
 {
 	for (int i=0; i<bitSize; i++)
 	{
-		printf("%d", binNumber->binaryNo[i].bit);
+		if(i == 4)
+			printf(" ");
+		printf("%c", binNumber->binaryNo[i].bit);
 	}
 	printf("\n");
 }
@@ -42,8 +44,8 @@ int convertBINtoDEC(BinaryNumber* binNumber)
 	int binValue = 1;
 	for(int i=(bitSize-1); i>0; i--)
 	{
-		const char* BinNo = binNumber->binaryNo[i].bit; //Char comparison - https://stackoverflow.com/questions/17766754/how-to-compare-a-char/17766879 - 11/11/2021
-		if(strcmp(binNo, "o") == 0)
+		//const char* BinNo = binNumber->binaryNo[i].bit; //Char comparison - https://stackoverflow.com/questions/17766754/how-to-compare-a-char/17766879 - 11/11/2021
+		if(binNumber->binaryNo[i].bit == 'o')
 		{
 			decimalNumber += binValue;
 		}
