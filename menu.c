@@ -1,10 +1,6 @@
 #include <stdio.h>
-<<<<<<< Updated upstream
 #include <unistd.h> // Add sleep function into program - https://stackoverflow.com/questions/14818084/what-is-the-proper-include-for-the-function-sleep - 11/11/2021
-=======
 #include <stdbool.h>
-#include <unistd.h> // Add sleep function into program - 
->>>>>>> Stashed changes
 
 #include "system.h"
 
