@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <cstring>
+#include <math.h>
 
 #include "binConv.h"
 
@@ -39,6 +40,9 @@ void freeBinaryNumber(BinaryNumber* binNumber)
 
 int convertBINtoDEC(BinaryNumber* binNumber)
 {
+	if(binNumber == NULL)
+		binNumber=createBinaryNumber('x');
+
 	int decimalNumber=0;
 	int row = bitSize - (bitSize-1);
 	int binValue = 1;
@@ -53,4 +57,18 @@ int convertBINtoDEC(BinaryNumber* binNumber)
 	}
 
 	return decimalNumber;
+}
+
+int convertDECtoBIN(BinaryNumber* binNumber, int decimalNumber)
+{
+	int i=0;
+	while(decimalNumber > 0)
+	{
+		binNumber->binaryNo[i].bit = 'o';
+		decimalNumber = decimalNumber / 2;
+
+		i++;
+	}
+
+	return 100;
 }

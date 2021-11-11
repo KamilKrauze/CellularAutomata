@@ -15,3 +15,4 @@ void displayBinaryNumber(BinaryNumber* binNumber);
 void freeBinaryNumber(BinaryNumber* binNumber);
 
 int convertBINtoDEC(BinaryNumber* binNumber);
+int convertDECtoBIN(BinaryNumber* binNumber, int decimalNumber);
