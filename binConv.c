@@ -42,7 +42,7 @@ int convertBINtoDEC(BinaryNumber* binNumber)
 	int binValue = 1;
 	for(int i=(bitSize-1); i>0; i--)
 	{
-		const char* BinNo = binNumber->binaryNo[i].bit; //Char comparison - - 11/11/2021
+		const char* BinNo = binNumber->binaryNo[i].bit; //Char comparison - https://stackoverflow.com/questions/17766754/how-to-compare-a-char/17766879 - 11/11/2021
 		if(strcmp(binNo, "o") == 0)
 		{
 			decimalNumber += binValue;
