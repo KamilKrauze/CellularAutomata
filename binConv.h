@@ -1,11 +1,17 @@
 #define bitSize 8
 
-typedef char Bit;
+typedef struct bit
+{
+	char bit;
+} Bit;
 
 typedef struct binNumber
 {
-	Bit bit[bitSize];
+	Bit binaryNo[bitSize];
 }	BinaryNumber;
 
 BinaryNumber* createBinaryNumber(Bit defaultBit);
+void displayBinaryBumber(BinaryNumber* binNumber);
 void freeBinaryNumber(BinaryNumber* binNumber);
+
+int convertBINtoDEC(BinaryNumber* binNumber);
