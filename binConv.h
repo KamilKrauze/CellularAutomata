@@ -19,3 +19,5 @@ int BinaryNumbertoBinString(char* binaryString, BinaryNumber* binNumber);
 int convertBINtoDEC(BinaryNumber* binNumber);
 int convertDECtoBIN(BinaryNumber* binNumber, int decimalNumber);
 
+int saveBinaryToFile(const char* filepath, BinaryNumber* binNumber, int decimalNumber);
+

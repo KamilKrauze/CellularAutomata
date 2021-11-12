@@ -1,7 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include <math.h>
 
 #include "binConv.h"
 
@@ -80,14 +79,41 @@ int convertBINtoDEC(BinaryNumber* binNumber)
 
 int convertDECtoBIN(BinaryNumber* binNumber, int decimalNumber)
 {
-	int i=0;
-	while(decimalNumber > 0)
+	for(int i=bitSize-1; decimalNumber>0; i--)
 	{
-		binNumber->binaryNo[i].bit = 'o';
-		decimalNumber = decimalNumber / 2;
+		if(decimalNumber%2 == 0)
+			binNumber->binaryNo[i].bit = 'x';
+		else if (decimalNumber > 1)
+			binNumber->binaryNo[i].bit = 'o';
 
-		i++;
+		decimalNumber=decimalNumber/2;
 	}
+
+	return 100;
+}
+
+int saveBinaryToFile(const char* filepath, BinaryNumber* binNumber, int decimalNumber)
+{	
+	(void)decimalNumber;
+
+	if(filepath == NULL)
+	{
+		return 101; // INVALID_INPUT_PARAMETER
+	}
+
+	printf("%p\n", filepath);
+
+	FILE* fp = fopen(filepath, "r");
+	if(fp != NULL)
+	{
+		char* str = (char*)malloc(sizeof(char));
+		BinaryNumbertoBinString(str, binNumber);
+		printf("%s\n", str);
+		fputs(str, fp);
+
+		fclose(fp);
+	}
+
 
 	return 100;
 }
