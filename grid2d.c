@@ -69,3 +69,6 @@ int display2DGrid(Grid2D *gridPtr)
     return SUCCESS;
 }
 
+int getNextGeneration2D(Grid2D* gridPtr, Ruleset ruleset, bool wrapAroundEdges) {
+    
+}
