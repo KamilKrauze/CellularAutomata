@@ -1,9 +1,17 @@
+/**
+ * Student Name: Kamil Krauze
+ * Matric Number: 2414951
+ * 
+ */
+
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 
 #include "binConv.h"
 
+//Create binary number struct with a default value. 'x' or 'o'
 BinaryNumber* createBinaryNumber(char defaultBit)
 {
 	BinaryNumber* binNumber = (BinaryNumber*)malloc(sizeof(BinaryNumber));
@@ -20,6 +28,7 @@ BinaryNumber* createBinaryNumber(char defaultBit)
 	return binNumber;
 }
 
+// Display the binary number
 void displayBinaryNumber(BinaryNumber* binNumber)
 {
 	for (int i=0; i<bitSize; i++)
@@ -31,12 +40,14 @@ void displayBinaryNumber(BinaryNumber* binNumber)
 	printf("\n");
 }
 
+// Free the memory allocation of the binary number.
 void freeBinaryNumber(BinaryNumber* binNumber)
 {
 	binNumber = NULL;
 	free(binNumber);
 }
 
+// Parse the string of binary numbers into the binNumber struct.
 int BinStringtoBinaryNumber(char binaryString[], BinaryNumber* binNumber)
 {
 	if(binaryString == NULL)
@@ -94,26 +105,43 @@ int convertDECtoBIN(BinaryNumber* binNumber, int decimalNumber)
 
 int saveBinaryToFile(const char* filepath, BinaryNumber* binNumber, int decimalNumber)
 {	
-	(void)decimalNumber;
-
 	if(filepath == NULL)
 	{
 		return 101; // INVALID_INPUT_PARAMETER
 	}
 
-	printf("%p\n", filepath);
-
-	FILE* fp = fopen(filepath, "r");
+	// Opens the file in appending mode, and reading and writing - https://www.tutorialspoint.com/cprogramming/c_file_io.htm - 13/11/2021
+	FILE* fp = fopen(filepath, "a+");
 	if(fp != NULL)
 	{
-		char* str = (char*)malloc(sizeof(char));
+		char str[bitSize];
 		BinaryNumbertoBinString(str, binNumber);
-		printf("%s\n", str);
-		fputs(str, fp);
+		printf("The str variable contains: %s\n", str);
+		
+		//Print the binary number into the file
+		for (int i = 0; i < bitSize; ++i)
+		{
+			if(str[i] == 'x')
+				fputc('0', fp);
+			else if (str[i] == 'o')
+				fputc('1', fp);
+		}
+
+		// Check if the decimal number is equal to the binary number, otherwise correct the decimal number.
+		if(decimalNumber != convertBINtoDEC(binNumber))
+		{
+			decimalNumber = convertBINtoDEC(binNumber);
+		}
+
+		// Convert the int into a char - https://stackoverflow.com/questions/8257714/how-to-convert-an-int-to-string-in-c - 13/11/2021
+		char decNo[bitSize];
+		sprintf(decNo, "%d", decimalNumber);
+
+		fputs(" = ", fp);
+		fputs(decNo, fp);
+		fputc('\n', fp);
 
 		fclose(fp);
 	}
-
-
 	return 100;
 }

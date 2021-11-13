@@ -1,3 +1,9 @@
+/**
+ * Student Name: Kamil Krauze
+ * Matric Number: 2414951
+ * 
+ */
+
 #define bitSize 8
 
 typedef struct bit
