@@ -17,7 +17,7 @@
 #define EMPTY_CELL_SYMBOL 'x'
 #define FULL_CELL_SYMBOL 'o'
 
-#define ROW_SIZE 8
+#define ROW_SIZE 9
 #define COL_SIZE 5
 
 typedef char Cell;
@@ -55,4 +55,4 @@ int getValueGrid1D(Grid1D *gridPtr, Cell *cellPtr, int column);
 
 int getValueGrid2D(Grid2D *gridPtr, Cell *cellPtr, int column, int row);
 
-int getNextGeneration1D(Grid1D* gridPtr, Ruleset ruleset);
+int getNextGeneration1D(Grid1D* gridPtr, Ruleset ruleset, bool wrapAroundEdges);

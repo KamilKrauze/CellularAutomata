@@ -8,11 +8,16 @@
 #include <unistd.h>
 #endif
 #include "system.h"
-
+bool ruleArray[] = {1, 0, 0, 0, 0, 0, 0, 0};
 
 int main()
 {
-	Grid1D *gridPtr = initialize1DGrid(EMPTY_CELL);
+    Ruleset *rulesetPtr = (Ruleset *)malloc(sizeof(Ruleset));
+    for (int i = 0; i < 8; i++)
+    {
+        rulesetPtr->ruleArray[i] = ruleArray[i];
+    }
+    Grid1D *gridPtr = initialize1DGrid(EMPTY_CELL);
     updateGrid1D(gridPtr, 5, FULL_CELL);
     updateGrid1D(gridPtr, 6, FULL_CELL);
     updateGrid1D(gridPtr, 7, FULL_CELL);
@@ -21,10 +26,9 @@ int main()
     getValueGrid1D(gridPtr, &value, 5);
     printf("%c\n", value);
     display1DGrid(gridPtr);
-    updateGrid1D(gridPtr, 6, EMPTY_CELL);
-    updateGrid1D(gridPtr, 7, EMPTY_CELL);
+
+    getNextGeneration1D(gridPtr, *rulesetPtr, false);
+
     display1DGrid(gridPtr);
-	return 0;
+    return 0;
 }
-
-

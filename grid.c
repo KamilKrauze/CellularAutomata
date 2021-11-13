@@ -168,14 +168,16 @@ int myRuleset[8][3] = {
 
 bool doCellsMatch(int a, Cell b)
 {
+    // printf("%d, %c\n", a, b);
     if (a == 0 && (b == EMPTY_CELL || b == OUT_OF_BOUNDS))
     {
         return true;
     }
-    else if (a == 1 && (b == FULL_CELL || b == OUT_OF_BOUNDS))
+    else if (a == 1 && (b == FULL_CELL)) // || b == OUT_OF_BOUNDS
     {
         return true;
     }
+    // printf("Cells dont match\n");
     return false;
 }
 
@@ -188,6 +190,7 @@ int getNextGeneration1D(Grid1D *gridPtr, Ruleset ruleset, bool wrapAroundEdges)
     Cell prev;
     Cell me;
     Cell next;
+    getValueGrid1D(gridPtr, &prev, -1);
     for (int i = 0; i < ROW_SIZE; i++)
     {
         if (i == 0 && wrapAroundEdges)
@@ -198,27 +201,37 @@ int getNextGeneration1D(Grid1D *gridPtr, Ruleset ruleset, bool wrapAroundEdges)
         {
             // prev stays the same as initialized at the end of the loop
         }
-        if (i == (ROW_SIZE - 1) && wrapAroundEdges)
+        if (i == (ROW_SIZE - 1))
         {
-            next = zeroIndexValueOfOldGrid;
+            if (wrapAroundEdges)
+            {
+
+                next = zeroIndexValueOfOldGrid;
+            }
+            else
+            {
+                next = OUT_OF_BOUNDS;
+            }
         }
         else
         {
-            getValueGrid1D(gridPtr, &prev, i + 1);
+            getValueGrid1D(gridPtr, &next, i + 1);
         }
         getValueGrid1D(gridPtr, &me, i);
 
         for (int j = 0; j < 8; j++)
         {
+            // printf("Cells at index %d, prev: %c me: %c next: %c \n ", i, prev, me, next);
             if (doCellsMatch(myRuleset[j][0], prev) && doCellsMatch(myRuleset[j][1], me) && doCellsMatch(myRuleset[j][2], next))
             {
                 if (ruleset.ruleArray[j])
                 {
-
+                    // printf("Filling in a cell");
                     gridPtr->row[i] = FULL_CELL;
                 }
                 else
                 {
+                    // printf("Removing  a cell");
                     gridPtr->row[i] = EMPTY_CELL;
                 }
             }
