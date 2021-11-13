@@ -212,9 +212,3 @@ void determineChoice_MainMenu()
 		}
 	}
 }
-
-int main()
-{
-	determineChoice_MainMenu();
-	return 0;
-}
