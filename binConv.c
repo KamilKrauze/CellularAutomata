@@ -61,12 +61,14 @@ int BinStringtoBinaryNumber(char binaryString[], BinaryNumber* binNumber)
 	return 100; // SUCCESS
 }
 
+// Parse the binNumber struct into a string of binary numbers.
 int BinaryNumbertoBinString(char* binaryString, BinaryNumber* binNumber)
 {
 	memcpy(binaryString, binNumber->binaryNo, sizeof(binNumber->binaryNo)+1);
 	return 100; // SUCCESS
 }
 
+// Convert the binNumber struct into a decimal number.
 int convertBINtoDEC(BinaryNumber* binNumber)
 {
 	if(binNumber == NULL)
@@ -88,6 +90,7 @@ int convertBINtoDEC(BinaryNumber* binNumber)
 	return decimalNumber;
 }
 
+// Convert the decimal number into a decimal number.
 int convertDECtoBIN(BinaryNumber* binNumber, int decimalNumber)
 {
 	for(int i=bitSize-1; decimalNumber>0; i--)
@@ -103,6 +106,7 @@ int convertDECtoBIN(BinaryNumber* binNumber, int decimalNumber)
 	return 100;
 }
 
+// Append the binary number struct data and the decimal number equivalent into a file that may or may not exist.
 int saveBinaryToFile(const char* filepath, BinaryNumber* binNumber, int decimalNumber)
 {	
 	if(filepath == NULL)
