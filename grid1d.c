@@ -57,6 +57,17 @@ int display1DGrid(Grid1D *gridPtr)
     return SUCCESS;
 }
 
+static int rulesetTemplate[8][3] = {
+    {1, 1, 1},
+    {1, 1, 0},
+    {1, 0, 1},
+    {1, 0, 0},
+    {0, 1, 1},
+    {0, 1, 0},
+    {0, 0, 1},
+    {0, 0, 0},
+};
+
 int getNextGeneration1D(Grid1D *gridPtr, Ruleset ruleset, bool wrapAroundEdges)
 {
     (void)ruleset;

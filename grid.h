@@ -17,23 +17,15 @@
 #define EMPTY_CELL_SYMBOL 'x'
 #define FULL_CELL_SYMBOL 'o'
 
-#define ROW_SIZE 9
-#define COL_SIZE 5
+#define ROW_SIZE 15
+#define COL_SIZE 10
 
 typedef char Cell;
 
-static int rulesetTemplate[8][3] = {
-    {1, 1, 1},
-    {1, 1, 0},
-    {1, 0, 1},
-    {1, 0, 0},
-    {0, 1, 1},
-    {0, 1, 0},
-    {0, 0, 1},
-    {0, 0, 0},
-};
 
-typedef struct ruleset {
+
+typedef struct ruleset
+{
     bool ruleArray[8];
 } Ruleset;
 
@@ -48,6 +40,9 @@ typedef struct grid2d
 } Grid2D;
 
 char getDisplayValueOfCell(Cell value);
+
+bool doCellsMatch(int a, Cell b);
+void printValueOfCell(Cell value);
 
 Grid1D *initialize1DGrid(Cell defaultValue);
 
@@ -65,9 +60,10 @@ int getValueGrid1D(Grid1D *gridPtr, Cell *cellPtr, int column);
 
 int getValueGrid2D(Grid2D *gridPtr, Cell *cellPtr, int column, int row);
 
-int getNextGeneration1D(Grid1D* gridPtr, Ruleset ruleset, bool wrapAroundEdges);
+int getNextGeneration1D(Grid1D *gridPtr, Ruleset ruleset, bool wrapAroundEdges);
 
-int getNextGeneration2D(Grid2D* gridPtr, Ruleset ruleset, bool wrapAroundEdges);
+int getNextGeneration2D(Grid2D *gridPtr, Ruleset rulesetForDeadCells, Ruleset rulesetForAliveCells, bool wrapAroundEdges);
 
 int runSimulation1d(Grid1D *gridPtr, Ruleset ruleset, bool wrapAroundEdges, int numberOfGenerations);
-int runSimulation2d(Grid2D *gridPtr, Ruleset ruleset, bool wrapAroundEdges, int numberOfGenerations);
+
+int runSimulation2d(Grid2D *gridPtr, Ruleset rulesetForDeadCells, Ruleset rulesetForAliveCells, bool wrapAroundEdges, int numberOfGenerations);
