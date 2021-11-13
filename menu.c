@@ -1,37 +1,13 @@
 #include "grid.h"
 #include <stdio.h>
 #include <stdlib.h>
-#include <unistd.h> // Add sleep function into program - https://stackoverflow.com/questions/14818084/what-is-the-proper-include-for-the-function-sleep - 11/11/2021
+// Add sleep function into program - https://stackoverflow.com/questions/14818084/what-is-the-proper-include-for-the-function-sleep - 11/11/2021
+#ifdef _WIN32
+#include <Windows.h>
+#else
+#include <unistd.h>
+#endif
 #include "system.h"
-
-void testGrid()
-{
-    Grid1D *gridPtr = initialize1DGrid(EMPTY_CELL);
-    if (gridPtr == NULL)
-    {
-        printf("memory error \n");
-    }
-    updateGrid1D(gridPtr, 5, FULL_CELL);
-    updateGrid1D(gridPtr, 6, FULL_CELL);
-    updateGrid1D(gridPtr, 7, FULL_CELL);
-
-    display1DGrid(gridPtr);
-
-    Grid2D *grid2dPtr = initialize2DGrid(EMPTY_CELL);
-    updateGrid2D(grid2dPtr, 1, 3, FULL_CELL);
-    updateGrid2D(grid2dPtr, 9, 15, FULL_CELL);
-    display2DGrid(grid2dPtr);
-}
-
-int main()
-{
-
-    testGrid();
-
-    return 0;
-}
-
-
 
 void displayMenu()
 {
@@ -88,35 +64,35 @@ void determineChoice_1DGrid()
 	create1D_subMenu();
 	int usrChoice = 0;
 
-	while(usrChoice != -1)
+	while (usrChoice != -1)
 	{
 		printf("User: ");
 		scanf("%d", &usrChoice);
 
-		switch(usrChoice)
+		switch (usrChoice)
 		{
-			case 1:
-				clear();
-				// Read file
-				break;
-			case 2:
-				clear();
-				// Write to file
-				break;
-			case 3:
-				clear();
-				// Initialize grid
-				break;
-			case 4:
-				clear();
-				displayMenu();
-				break;
-			case 5:
-				_exit(0);
-				break;
-			default:
-				clear();
-				create1D_subMenu();
+		case 1:
+			clear();
+			// Read file
+			break;
+		case 2:
+			clear();
+			// Write to file
+			break;
+		case 3:
+			clear();
+			// Initialize grid
+			break;
+		case 4:
+			clear();
+			displayMenu();
+			break;
+		case 5:
+			_exit(0);
+			break;
+		default:
+			clear();
+			create1D_subMenu();
 		}
 	}
 }
@@ -127,35 +103,35 @@ void determineChoice_2DGrid()
 	create2D_subMenu();
 	int usrChoice = 0;
 
-	while(usrChoice != -1)
+	while (usrChoice != -1)
 	{
 		printf("User: ");
 		scanf("%d", &usrChoice);
 
-		switch(usrChoice)
+		switch (usrChoice)
 		{
-			case 1:
-				clear();
-				// Read file
-				break;
-			case 2:
-				clear();
-				// Write to file
-				break;
-			case 3:
-				clear();
-				// Initialize grid
-				break;
-			case 4:
-				clear();
-				displayMenu();
-				break;
-			case 5:
-				_exit(0);
-				break;
-			default:
-				clear();
-				create2D_subMenu();
+		case 1:
+			clear();
+			// Read file
+			break;
+		case 2:
+			clear();
+			// Write to file
+			break;
+		case 3:
+			clear();
+			// Initialize grid
+			break;
+		case 4:
+			clear();
+			displayMenu();
+			break;
+		case 5:
+			_exit(0);
+			break;
+		default:
+			clear();
+			create2D_subMenu();
 		}
 	}
 }
@@ -165,35 +141,35 @@ void determineChoice_3DGrid()
 	create3D_subMenu();
 	int usrChoice = 0;
 
-	while(usrChoice != -1)
+	while (usrChoice != -1)
 	{
 		printf("User: ");
 		scanf("%d", &usrChoice);
 
-		switch(usrChoice)
+		switch (usrChoice)
 		{
-			case 1:
-				clear();
-				// Read file
-				break;
-			case 2:
-				clear();
-				// Write to file
-				break;
-			case 3:
-				clear();
-				// Initialize grid
-				break;
-			case 4:
-				clear();
-				displayMenu();
-				break;
-			case 5:
-				_exit(0);
-				break;
-			default:
-				clear();
-				create3D_subMenu();
+		case 1:
+			clear();
+			// Read file
+			break;
+		case 2:
+			clear();
+			// Write to file
+			break;
+		case 3:
+			clear();
+			// Initialize grid
+			break;
+		case 4:
+			clear();
+			displayMenu();
+			break;
+		case 5:
+			_exit(0);
+			break;
+		default:
+			clear();
+			create3D_subMenu();
 		}
 	}
 }
@@ -204,35 +180,35 @@ void determineChoice_MainMenu()
 	displayMenu();
 	int usrChoice = 0;
 
-	while(usrChoice != -1)
+	while (usrChoice != -1)
 	{
 		printf("User: ");
 		scanf("%d", &usrChoice);
 
-		switch(usrChoice)
+		switch (usrChoice)
 		{
-			case 1:
-				clear();
-				determineChoice_1DGrid();
-				break;
-			case 2:
-				clear();
-				determineChoice_2DGrid();
-				break;
-			case 3:
-				clear();
-				determineChoice_3DGrid();
-				break;
-			case 4:
-				clear();
-				// RUN TEST FUNCTION
-				break;
-			case 5:
-				_exit(0);
-				break;
-			default:
-				clear();
-				displayMenu();
+		case 1:
+			clear();
+			determineChoice_1DGrid();
+			break;
+		case 2:
+			clear();
+			determineChoice_2DGrid();
+			break;
+		case 3:
+			clear();
+			determineChoice_3DGrid();
+			break;
+		case 4:
+			clear();
+			// RUN TEST FUNCTION
+			break;
+		case 5:
+			_exit(0);
+			break;
+		default:
+			clear();
+			displayMenu();
 		}
 	}
 }
