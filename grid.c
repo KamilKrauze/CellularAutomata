@@ -181,42 +181,49 @@ bool doCellsMatch(int a, Cell b)
 
 int getNextGeneration1D(Grid1D *gridPtr, Ruleset ruleset, bool wrapAroundEdges)
 {
-    (void) ruleset;
-    Grid1D oldGrid = *gridPtr;
+    (void)ruleset;
+    Cell zeroIndexValueOfOldGrid;
+    getValueGrid1D(gridPtr, &zeroIndexValueOfOldGrid, 0);
+
+    Cell prev;
+    Cell me;
+    Cell next;
     for (int i = 0; i < ROW_SIZE; i++)
     {
-        Cell prev;
-        Cell me;
-        Cell next;
         if (i == 0 && wrapAroundEdges)
         {
-            getValueGrid1D(&oldGrid, &prev, ROW_SIZE - 1);
+            getValueGrid1D(gridPtr, &prev, ROW_SIZE - 1);
         }
         else
         {
-            getValueGrid1D(&oldGrid, &prev, i - 1);
+            // prev stays the same as initialized at the end of the loop
         }
         if (i == (ROW_SIZE - 1) && wrapAroundEdges)
         {
-            getValueGrid1D(&oldGrid, &next, 0);
+            next = zeroIndexValueOfOldGrid;
         }
         else
         {
-            getValueGrid1D(&oldGrid, &prev, i + 1);
+            getValueGrid1D(gridPtr, &prev, i + 1);
         }
-        getValueGrid1D(&oldGrid, &me, i);
+        getValueGrid1D(gridPtr, &me, i);
 
         for (int j = 0; j < 8; j++)
         {
             if (doCellsMatch(myRuleset[j][0], prev) && doCellsMatch(myRuleset[j][1], me) && doCellsMatch(myRuleset[j][2], next))
             {
-                gridPtr->row[i] = FULL_CELL;
-            }
-            else
-            {
-                gridPtr->row[i] = EMPTY_CELL;
+                if (ruleset.ruleArray[j])
+                {
+
+                    gridPtr->row[i] = FULL_CELL;
+                }
+                else
+                {
+                    gridPtr->row[i] = EMPTY_CELL;
+                }
             }
         }
+        prev = me;
     }
     return SUCCESS;
 }
