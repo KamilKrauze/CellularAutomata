@@ -66,4 +66,8 @@ int getValueGrid1D(Grid1D *gridPtr, Cell *cellPtr, int column);
 int getValueGrid2D(Grid2D *gridPtr, Cell *cellPtr, int column, int row);
 
 int getNextGeneration1D(Grid1D* gridPtr, Ruleset ruleset, bool wrapAroundEdges);
+
 int getNextGeneration2D(Grid2D* gridPtr, Ruleset ruleset, bool wrapAroundEdges);
+
+int runSimulation1d(Grid1D *gridPtr, Ruleset ruleset, bool wrapAroundEdges, int numberOfGenerations);
+int runSimulation2d(Grid2D *gridPtr, Ruleset ruleset, bool wrapAroundEdges, int numberOfGenerations);

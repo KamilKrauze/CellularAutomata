@@ -128,3 +128,4 @@ int runSimulation1d(Grid1D *gridPtr, Ruleset ruleset, bool wrapAroundEdges, int 
     printf("End of simulation");
     return SUCCESS;
 }
+    
