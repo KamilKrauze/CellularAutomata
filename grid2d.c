@@ -116,7 +116,7 @@ int calculateAdjacentCells(Grid2D *gridPtr, int i, int j, bool wrapAroundEdges)
     return liveAdjacentCells;
 }
 
-int getNextGeneration2D(Grid2D *gridPtr, Ruleset rulesetForDeadCells, Ruleset rulesetForAliveCells, bool wrapAroundEdges)
+int getNextGeneration2D(Grid2D *gridPtr, Ruleset2D rulesetForDeadCells, Ruleset2D rulesetForAliveCells, bool wrapAroundEdges)
 {
     Grid2D oldGrid = *gridPtr;
     for (int i = 0; i < COL_SIZE; i++)
@@ -125,7 +125,7 @@ int getNextGeneration2D(Grid2D *gridPtr, Ruleset rulesetForDeadCells, Ruleset ru
         {
             int liveAdjacentCells = calculateAdjacentCells(&oldGrid, i, j, wrapAroundEdges);
             Cell currentCell;
-            Ruleset ruleset;
+            Ruleset2D ruleset;
             getValueGrid2D(gridPtr, &currentCell, i, j);
 
             if (currentCell == FULL_CELL)
@@ -150,7 +150,7 @@ int getNextGeneration2D(Grid2D *gridPtr, Ruleset rulesetForDeadCells, Ruleset ru
     return SUCCESS;
 }
 
-int runSimulation2d(Grid2D *gridPtr, Ruleset rulesetForDeadCells, Ruleset rulesetForAliveCells, bool wrapAroundEdges, int numberOfGenerations)
+int runSimulation2d(Grid2D *gridPtr, Ruleset2D rulesetForDeadCells, Ruleset2D rulesetForAliveCells, bool wrapAroundEdges, int numberOfGenerations)
 {
     display2DGrid(gridPtr);
     for (int i = 0; i < numberOfGenerations; i++)
@@ -159,5 +159,33 @@ int runSimulation2d(Grid2D *gridPtr, Ruleset rulesetForDeadCells, Ruleset rulese
         display2DGrid(gridPtr);
     }
     printf("End of simulation");
+    return SUCCESS;
+}
+
+bool conwaysGameOfLifeRules[2][9] = {
+    {0, 0, 1, 1, 0, 0, 0, 0, 0},
+    {0, 0, 0, 0, 0, 0, 0, 0, 0},
+};
+
+int runConwaysGameOfLife(Grid2D *gridPtr, int numberOfGenerations, bool wrapEdges)
+{
+    Ruleset2D *rulesetForDeadCells = (Ruleset2D *)malloc(sizeof(Ruleset2D));
+    Ruleset2D *rulesetForAliveCells = (Ruleset2D *)malloc(sizeof(Ruleset2D));
+    
+    for (int i = 0; i < 9; i++)
+    {
+        rulesetForDeadCells->ruleArray[i] = conwaysGameOfLifeRules[0][i];
+        rulesetForAliveCells->ruleArray[i] = conwaysGameOfLifeRules[1][i];
+    }
+
+    display2DGrid(gridPtr);
+    for (int i = 0; i < numberOfGenerations; i++)
+    {
+        getNextGeneration2D(gridPtr, *rulesetForDeadCells, *rulesetForAliveCells, wrapEdges);
+        display2DGrid(gridPtr);
+    }
+    printf("End of simulation");
+    free(rulesetForDeadCells);
+    free(rulesetForAliveCells);
     return SUCCESS;
 }

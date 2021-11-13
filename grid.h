@@ -22,12 +22,14 @@
 
 typedef char Cell;
 
-
-
 typedef struct ruleset
 {
     bool ruleArray[8];
 } Ruleset;
+typedef struct ruleset2d
+{
+    bool ruleArray[9];
+} Ruleset2D;
 
 typedef struct grid1d
 {
@@ -62,8 +64,10 @@ int getValueGrid2D(Grid2D *gridPtr, Cell *cellPtr, int column, int row);
 
 int getNextGeneration1D(Grid1D *gridPtr, Ruleset ruleset, bool wrapAroundEdges);
 
-int getNextGeneration2D(Grid2D *gridPtr, Ruleset rulesetForDeadCells, Ruleset rulesetForAliveCells, bool wrapAroundEdges);
+int getNextGeneration2D(Grid2D *gridPtr, Ruleset2D rulesetForDeadCells, Ruleset2D rulesetForAliveCells, bool wrapAroundEdges);
 
 int runSimulation1d(Grid1D *gridPtr, Ruleset ruleset, bool wrapAroundEdges, int numberOfGenerations);
 
-int runSimulation2d(Grid2D *gridPtr, Ruleset rulesetForDeadCells, Ruleset rulesetForAliveCells, bool wrapAroundEdges, int numberOfGenerations);
+int runSimulation2d(Grid2D *gridPtr, Ruleset2D rulesetForDeadCells, Ruleset2D rulesetForAliveCells, bool wrapAroundEdges, int numberOfGenerations);
+
+int runConwaysGameOfLife(Grid2D *gridPtr, int numberOfGenerations , bool wrapEdges);
