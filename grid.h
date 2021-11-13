@@ -22,6 +22,16 @@
 
 typedef char Cell;
 
+static int rulesetTemplate[8][3] = {
+    {1, 1, 1},
+    {1, 1, 0},
+    {1, 0, 1},
+    {1, 0, 0},
+    {0, 1, 1},
+    {0, 1, 0},
+    {0, 0, 1},
+    {0, 0, 0},
+};
 
 typedef struct ruleset {
     bool ruleArray[8];
