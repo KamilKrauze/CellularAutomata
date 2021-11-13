@@ -4,7 +4,6 @@
 
 #include "grid.h"
 
-
 // DONE
 Grid1D *initialize1DGrid(Cell defaultValue)
 {
@@ -57,10 +56,6 @@ int display1DGrid(Grid1D *gridPtr)
     printf("\n");
     return SUCCESS;
 }
-
-
-
-
 
 int getNextGeneration1D(Grid1D *gridPtr, Ruleset ruleset, bool wrapAroundEdges)
 {
@@ -119,5 +114,17 @@ int getNextGeneration1D(Grid1D *gridPtr, Ruleset ruleset, bool wrapAroundEdges)
         }
         prev = me;
     }
+    return SUCCESS;
+}
+
+int runSimulation1d(Grid1D *gridPtr, Ruleset ruleset, bool wrapAroundEdges, int numberOfGenerations)
+{
+    display1DGrid(gridPtr);
+    for (int i = 0; i < numberOfGenerations; i++)
+    {
+        getNextGeneration1D(gridPtr, ruleset, wrapAroundEdges);
+        display1DGrid(gridPtr);
+    }
+    printf("End of simulation");
     return SUCCESS;
 }
