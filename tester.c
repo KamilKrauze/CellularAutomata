@@ -1,7 +1,7 @@
 #include "grid.h"
 #include <stdio.h>
 #include <stdlib.h>
-// Add sleep function into program - https://stackoverflow.com/questions/14818084/what-is-the-proper-include-for-the-function-sleep - 11/11/2021
+// Add sleep function into program - https://stackoverflow.     com/questions/14818084/what-is-the-proper-include-for-the-function-sleep - 11/11/2021
 #ifdef _WIN32
 #include <Windows.h>
 #else
@@ -29,13 +29,14 @@ int main()
     updateGrid2D(gridPtr, 6, 6, FULL_CELL);
     updateGrid2D(gridPtr, 5, 6, FULL_CELL);
     display2DGrid(gridPtr);
-    // Ruleset2D ruleset = *rulesetPtr;
-    // getNextGeneration2D(gridPtr, ruleset, ruleset, true);
+    Ruleset2D ruleset = *rulesetPtr;
+    getNextGeneration2D(gridPtr, ruleset, ruleset, true);
 
-    runConwaysGameOfLife(gridPtr, 5, false);
+    runConwaysGameOfLife(gridPtr, 1, false);
+
     display2DGrid(gridPtr);
+    free(gridPtr);
 
     free(rulesetPtr);
-    free(gridPtr);
     return 0;
 }

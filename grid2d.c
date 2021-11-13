@@ -9,17 +9,15 @@
 
 Grid2D *initialize2DGrid(Cell defaultValue)
 {
-    printf("before");
     Grid2D *gridPtr = (Grid2D *)malloc(sizeof(Grid2D));
-    printf("before");
 
     if (gridPtr == NULL)
     {
         return NULL;
     }
-    for (int i = 0; i < ROW_SIZE; i++)
+    for (int i = 0; i < COL_SIZE; i++)
     {
-        for (int j = 0; j < COL_SIZE; j++)
+        for (int j = 0; j < ROW_SIZE; j++)
         {
             gridPtr->table[i][j] = defaultValue;
         }
@@ -169,10 +167,21 @@ bool conwaysGameOfLifeRules[2][9] = {
 
 int runConwaysGameOfLife(Grid2D *gridPtr, int numberOfGenerations, bool wrapEdges)
 {
+    // int *p = (int *)malloc(sizeof(int));
+    // if (p == NULL)
+    // {
+    //     printf("Mem alloc error");
+    //     return MEMORY_ALLOCATION_ERROR;
+    // }
+    // free(p);
+
+    // (void)wrapEdges;
+    // (void)numberOfGenerations;
+    // (void)gridPtr;
     Ruleset2D *rulesetForDeadCells = (Ruleset2D *)malloc(sizeof(Ruleset2D));
     Ruleset2D *rulesetForAliveCells = (Ruleset2D *)malloc(sizeof(Ruleset2D));
-    
-    for (int i = 0; i < 9; i++)
+
+    for (int i = 0; i < 8; i++)
     {
         rulesetForDeadCells->ruleArray[i] = conwaysGameOfLifeRules[0][i];
         rulesetForAliveCells->ruleArray[i] = conwaysGameOfLifeRules[1][i];
@@ -184,8 +193,11 @@ int runConwaysGameOfLife(Grid2D *gridPtr, int numberOfGenerations, bool wrapEdge
         getNextGeneration2D(gridPtr, *rulesetForDeadCells, *rulesetForAliveCells, wrapEdges);
         display2DGrid(gridPtr);
     }
+
     printf("End of simulation");
-    free(rulesetForDeadCells);
+    // (void) rulesetForDeadCells;
     free(rulesetForAliveCells);
+    free(rulesetForDeadCells);
+
     return SUCCESS;
 }

@@ -70,4 +70,4 @@ int runSimulation1d(Grid1D *gridPtr, Ruleset ruleset, bool wrapAroundEdges, int 
 
 int runSimulation2d(Grid2D *gridPtr, Ruleset2D rulesetForDeadCells, Ruleset2D rulesetForAliveCells, bool wrapAroundEdges, int numberOfGenerations);
 
-int runConwaysGameOfLife(Grid2D *gridPtr, int numberOfGenerations , bool wrapEdges);
+int runConwaysGameOfLife(Grid2D *gridPtr, int numberOfGenerations, bool wrapEdges);
