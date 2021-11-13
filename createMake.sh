@@ -28,7 +28,7 @@ case $type in
         echo -e $srcfiles
         
         printf "main: $srcfiles" >> makefile
-        printf "\n\tg++ -g -Wall -Wextra -Werror -o main $srcfiles" >> makefile
+        printf "\n\tgcc -g -Wall -Wextra -Werror -o main $srcfiles" >> makefile
         
         printf "\nclean:" >> makefile
         printf "\n\trm -f -r main" >> makefile
