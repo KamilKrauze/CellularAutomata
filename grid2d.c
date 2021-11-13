@@ -68,3 +68,4 @@ int display2DGrid(Grid2D *gridPtr)
 
     return SUCCESS;
 }
+
