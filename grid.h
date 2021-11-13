@@ -1,3 +1,5 @@
+#include <stdbool.h>
+
 #define SUCCESS 100
 #define INVALID_INPUT_PARAMETER 101
 
@@ -8,6 +10,7 @@
 #define NOT_IMPLEMENTED 104
 #define FILE_IO_ERROR 105
 
+#define OUT_OF_BOUNDS 'Z'
 #define EMPTY_CELL '0'
 #define FULL_CELL '1'
 
@@ -18,6 +21,11 @@
 #define COL_SIZE 5
 
 typedef char Cell;
+
+
+typedef struct ruleset {
+    bool ruleArray[8];
+} Ruleset;
 
 typedef struct grid1d
 {
@@ -46,3 +54,5 @@ int updateGrid2D(Grid2D *gridPtr, int column, int row, Cell value);
 int getValueGrid1D(Grid1D *gridPtr, Cell *cellPtr, int column);
 
 int getValueGrid2D(Grid2D *gridPtr, Cell *cellPtr, int column, int row);
+
+int getNextGeneration1D(Grid1D* gridPtr, Ruleset ruleset);

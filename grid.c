@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <stdbool.h>
 
 #include "grid.h"
 
@@ -67,6 +68,7 @@ int getValueGrid1D(Grid1D *gridPtr, Cell *target, int column)
 {
     if (gridPtr == NULL || column < 0 || column > ROW_SIZE)
     {
+        *target = OUT_OF_BOUNDS;
         return INVALID_INPUT_PARAMETER;
     }
     *target = gridPtr->row[column];
@@ -150,5 +152,71 @@ int display2DGrid(Grid2D *gridPtr)
     }
     printf("\n\n");
 
+    return SUCCESS;
+}
+
+int myRuleset[8][3] = {
+    {1, 1, 1},
+    {1, 1, 0},
+    {1, 0, 1},
+    {1, 0, 0},
+    {0, 1, 1},
+    {0, 1, 0},
+    {0, 0, 1},
+    {0, 0, 0},
+};
+
+bool doCellsMatch(int a, Cell b)
+{
+    if (a == 0 && (b == EMPTY_CELL || b == OUT_OF_BOUNDS))
+    {
+        return true;
+    }
+    else if (a == 1 && (b == FULL_CELL || b == OUT_OF_BOUNDS))
+    {
+        return true;
+    }
+    return false;
+}
+
+int getNextGeneration1D(Grid1D *gridPtr, Ruleset ruleset, bool wrapAroundEdges)
+{
+    (void) ruleset;
+    Grid1D oldGrid = *gridPtr;
+    for (int i = 0; i < ROW_SIZE; i++)
+    {
+        Cell prev;
+        Cell me;
+        Cell next;
+        if (i == 0 && wrapAroundEdges)
+        {
+            getValueGrid1D(&oldGrid, &prev, ROW_SIZE - 1);
+        }
+        else
+        {
+            getValueGrid1D(&oldGrid, &prev, i - 1);
+        }
+        if (i == (ROW_SIZE - 1) && wrapAroundEdges)
+        {
+            getValueGrid1D(&oldGrid, &next, 0);
+        }
+        else
+        {
+            getValueGrid1D(&oldGrid, &prev, i + 1);
+        }
+        getValueGrid1D(&oldGrid, &me, i);
+
+        for (int j = 0; j < 8; j++)
+        {
+            if (doCellsMatch(myRuleset[j][0], prev) && doCellsMatch(myRuleset[j][1], me) && doCellsMatch(myRuleset[j][2], next))
+            {
+                gridPtr->row[i] = FULL_CELL;
+            }
+            else
+            {
+                gridPtr->row[i] = EMPTY_CELL;
+            }
+        }
+    }
     return SUCCESS;
 }
