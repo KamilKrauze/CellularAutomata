@@ -11,7 +11,7 @@
 
 int main()
 {
-	//determineChoice_MainMenu();
+	determineChoice_MainMenu();
 
 	// /**
 	//  * Binary conversion test.
@@ -19,18 +19,18 @@ int main()
 	//  * Uncomment for testing purposes
 	//  */
 
-	BinaryNumber* binNumber = createBinaryNumber('x');
-	displayBinaryNumber(binNumber);
-	printf("%d\n", convertBINtoDEC(binNumber));
+	// BinaryNumber* binNumber = createBinaryNumber('x');
+	// displayBinaryNumber(binNumber);
+	// printf("%d\n", convertBINtoDEC(binNumber));
 	
-	char str1[bitSize] = "oxxxxxxo";
-	BinStringtoBinaryNumber(str1, binNumber);
-	displayBinaryNumber(binNumber);
-	printf("%d\n", convertBINtoDEC(binNumber));
+	// char str1[bitSize] = "xoxoxxxo";
+	// BinStringtoBinaryNumber(str1, binNumber);
+	// displayBinaryNumber(binNumber);
+	// printf("%d\n", convertBINtoDEC(binNumber));
 
 	// saveBinaryToFile("test.txt", binNumber, 101);
 
-	freeBinaryNumber(binNumber);
+	// freeBinaryNumber(binNumber);
 
 	return 0;
 }

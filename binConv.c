@@ -72,29 +72,28 @@ int convertBINtoDEC(BinaryNumber *binNumber)
 		binNumber = createBinaryNumber('x');
 
 	int decimalNumber = 0;
-	int row = bitSize - (bitSize - 1);
-	int binValue = 1;
-	for (int i = (bitSize); i > 0; i--)
+	int binValue = 128;
+	for (int i = 0; i < bitSize; i++)
 	{
 		if (binNumber->binaryNo[i].bit == 'o') //Char comparison - https://stackoverflow.com/questions/17766754/how-to-compare-a-char/17766879 - 11/11/2021
 		{
 			decimalNumber += binValue;
+			printf("NO: %d\n",decimalNumber);
 		}
-		row -= (bitSize - 1);
-		binValue *= 2;
+		binValue = binValue / 2;
 	}
 
 	return decimalNumber;
 }
 
-// Convert the decimal number into a decimal number.
+// Convert the decimal number into a binary number.
 int convertDECtoBIN(BinaryNumber *binNumber, int decimalNumber)
 {
 	for (int i = bitSize - 1; decimalNumber > 0; i--)
 	{
 		if (decimalNumber % 2 == 0)
 			binNumber->binaryNo[i].bit = 'x';
-		else if (decimalNumber > 1)
+		else if (decimalNumber % 2 >= 1)
 			binNumber->binaryNo[i].bit = 'o';
 
 		decimalNumber = decimalNumber / 2;

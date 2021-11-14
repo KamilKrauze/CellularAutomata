@@ -39,7 +39,7 @@ void displayMenu_BinConv()
 	printf("\t4. - Convert decimal number to binary number\n");
 	printf("\t5. - Save binary number to text file\n");
 	printf("\t6. - Get binary number from file\n");
-	printf("\t7. - Exit\n");
+	printf("\t7. - Exit to main menu\n");
 }
 
 void determineChoice_BinConv()
@@ -111,7 +111,15 @@ void determineChoice_BinConv()
 		
 		case 5: // Save binary number to text file
 			clear();
-
+			char* filepath = (char*)malloc(sizeof(char));
+			if(filepath == NULL)
+			{
+				printf("Memory allocation error. Please try again");
+			}
+			printf("Please enter a file path.\nData will be appended to a file that exists\nIf the file does not exist a new one will be created with the provided name.\nExample: ../filename.txt\n");
+			scanf("%s", filepath);
+			saveBinaryToFile(filepath, binNumber, DECnumber);
+			
 			break;
 		
 		case 6: // Get binary number from file
@@ -119,8 +127,9 @@ void determineChoice_BinConv()
 
 			break;
 		
-		case 7: // Exit Program
-			_exit(0);
+		case 7: // Exit bin converter
+			free(binNumber);
+			usrChoice = -1;
 			break;
 		
 		default:
