@@ -18,6 +18,7 @@ int write1DToFile(Grid1D *gridPtr)
         return FILE_IO_ERROR;
     }
 
+    fprintf(fptr, "%s", grid1dColCount, ",");
     for (int i = 0; i < grid1dColCount; i++)
     {
         fprintf(fptr, "%s", gridPtr->row[i], ",");
@@ -32,7 +33,6 @@ int read1DFromFile()
     FILE *fptr;
     fptr = fopen("saved1D.txt", "r");
     if (fptr == NULL)
-        ;
     {
         return FILE_IO_ERROR;
     }
@@ -71,7 +71,6 @@ int read2DFromFile()
     FILE *fptr;
     fptr = fopen("saved2D.txt", "r");
     if (fptr == NULL)
-        ;
     {
         return FILE_IO_ERROR;
     }
