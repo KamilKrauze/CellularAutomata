@@ -17,8 +17,8 @@
 #define EMPTY_CELL_SYMBOL 'x'
 #define FULL_CELL_SYMBOL 'o'
 
-#define ROW_SIZE 15
-#define COL_SIZE 15
+#define COL_COUNT 15
+#define ROW_COUNT 5
 
 typedef char Cell;
 
@@ -28,17 +28,18 @@ typedef struct ruleset
 } Ruleset;
 typedef struct ruleset2d
 {
-    bool ruleArray[9];
+    bool rulesetForDeadCells[9];
+    bool rulesetForAliveCells[9];
 } Ruleset2D;
 
 typedef struct grid1d
 {
-    Cell row[ROW_SIZE];
+    Cell row[COL_COUNT];
 } Grid1D;
 
 typedef struct grid2d
 {
-    Cell table[COL_SIZE][ROW_SIZE];
+    Cell table[ROW_COUNT][COL_COUNT];
 } Grid2D;
 
 char getDisplayValueOfCell(Cell value);
@@ -64,10 +65,10 @@ int getValueGrid2D(Grid2D *gridPtr, Cell *cellPtr, int column, int row);
 
 int getNextGeneration1D(Grid1D *gridPtr, Ruleset ruleset, bool wrapAroundEdges);
 
-int getNextGeneration2D(Grid2D *gridPtr, Ruleset2D rulesetForDeadCells, Ruleset2D rulesetForAliveCells, bool wrapAroundEdges);
+int getNextGeneration2D(Grid2D *gridPtr, Ruleset2D ruleset, bool wrapAroundEdges);
 
 int runSimulation1d(Grid1D *gridPtr, Ruleset ruleset, bool wrapAroundEdges, int numberOfGenerations);
 
-int runSimulation2d(Grid2D *gridPtr, Ruleset2D rulesetForDeadCells, Ruleset2D rulesetForAliveCells, bool wrapAroundEdges, int numberOfGenerations);
+int runSimulation2d(Grid2D *gridPtr, Ruleset2D ruleset, bool wrapAroundEdges, int numberOfGenerations);
 
 int runConwaysGameOfLife(Grid2D *gridPtr, int numberOfGenerations, bool wrapEdges);

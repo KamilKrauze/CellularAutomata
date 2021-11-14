@@ -13,7 +13,7 @@ Grid1D *initialize1DGrid(Cell defaultValue)
     {
         return NULL;
     }
-    for (int i = 0; i < ROW_SIZE; i++)
+    for (int i = 0; i < COL_COUNT; i++)
     {
         gridPtr->row[i] = defaultValue;
     }
@@ -22,7 +22,7 @@ Grid1D *initialize1DGrid(Cell defaultValue)
 
 int updateGrid1D(Grid1D *gridPtr, int column, Cell value)
 {
-    if (gridPtr == NULL || column < 0 || column > ROW_SIZE)
+    if (gridPtr == NULL || column < 0 || column > COL_COUNT)
     {
         return INVALID_INPUT_PARAMETER;
     }
@@ -32,7 +32,7 @@ int updateGrid1D(Grid1D *gridPtr, int column, Cell value)
 
 int getValueGrid1D(Grid1D *gridPtr, Cell *target, int column)
 {
-    if (gridPtr == NULL || column < 0 || column > ROW_SIZE)
+    if (gridPtr == NULL || column < 0 || column > COL_COUNT)
     {
         *target = OUT_OF_BOUNDS;
         return INVALID_INPUT_PARAMETER;
@@ -47,7 +47,7 @@ int display1DGrid(Grid1D *gridPtr)
     {
         return INVALID_INPUT_PARAMETER;
     }
-    for (int i = 0; i < ROW_SIZE; i++)
+    for (int i = 0; i < COL_COUNT; i++)
     {
         Cell value;
         getValueGrid1D(gridPtr, &value, i);
@@ -78,17 +78,17 @@ int getNextGeneration1D(Grid1D *gridPtr, Ruleset ruleset, bool wrapAroundEdges)
     Cell me;
     Cell next;
     getValueGrid1D(gridPtr, &prev, -1);
-    for (int i = 0; i < ROW_SIZE; i++)
+    for (int i = 0; i < COL_COUNT; i++)
     {
         if (i == 0 && wrapAroundEdges)
         {
-            getValueGrid1D(gridPtr, &prev, ROW_SIZE - 1);
+            getValueGrid1D(gridPtr, &prev, COL_COUNT - 1);
         }
         else
         {
             // prev stays the same as initialized at the end of the loop
         }
-        if (i == (ROW_SIZE - 1))
+        if (i == (COL_COUNT - 1))
         {
             if (wrapAroundEdges)
             {
