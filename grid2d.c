@@ -15,12 +15,12 @@ Grid2D *initialize2DGrid(Cell defaultValue)
     {
         return NULL;
     }
-    for (int i = 0; i < COL_SIZE; i++)
+    for (int rowIndex = 0; rowIndex < ROW_COUNT; rowIndex++)
     {
-        for (int j = 0; j < ROW_SIZE; j++)
+        for (int columnIndex = 0; columnIndex < COL_COUNT; columnIndex++)
         {
             // gridPtr->table[i][j] = i;
-            updateGrid2D(gridPtr, i, j, defaultValue);
+            updateGrid2D(gridPtr, rowIndex, columnIndex, defaultValue);
             // printf("Initializing %d, %d, \n", i, j);
         }
     }
@@ -28,29 +28,27 @@ Grid2D *initialize2DGrid(Cell defaultValue)
     return gridPtr;
 }
 
-int updateGrid2D(Grid2D *gridPtr, int row, int column, Cell value)
+int updateGrid2D(Grid2D *gridPtr, int rowIndex, int columnIndex, Cell value)
 {
-    if (gridPtr == NULL || column < 0 || column > COL_SIZE || row < 0 || row > ROW_SIZE)
+    if (gridPtr == NULL || columnIndex < 0 || columnIndex > COL_COUNT || rowIndex < 0 || rowIndex > ROW_COUNT)
     {
         printf("INVALID INPUT PARAMETER");
         return INVALID_INPUT_PARAMETER;
     }
-    gridPtr->table[column][row] = value;
+    gridPtr->table[rowIndex][columnIndex] = value;
     return SUCCESS;
 }
 
-int getValueGrid2D(Grid2D *gridPtr, Cell *target, int row, int column)
+int getValueGrid2D(Grid2D *gridPtr, Cell *target, int rowIndex, int columnIndex)
 {
-    if (gridPtr == NULL || column < 0 || column > COL_SIZE || row < 0 || row > ROW_SIZE)
+    if (gridPtr == NULL || columnIndex < 0 || columnIndex > COL_COUNT || rowIndex < 0 || rowIndex > ROW_COUNT)
     {
         *target = OUT_OF_BOUNDS;
-        // printf("INVALID INPUT PARAMETER"); 
-        
-
+        // printf("INVALID INPUT PARAMETER");
 
         return INVALID_INPUT_PARAMETER;
     }
-    *target = gridPtr->table[column][row];
+    *target = gridPtr->table[rowIndex][columnIndex];
     return SUCCESS;
 }
 
@@ -62,12 +60,12 @@ int display2DGrid(Grid2D *gridPtr)
     }
     printf("\n\n");
 
-    for (int i = 0; i < COL_SIZE; i++)
+    for (int rowIndex = 0; rowIndex < ROW_COUNT; rowIndex++)
     {
-        for (int j = 0; j < ROW_SIZE; j++)
+        for (int columnIndex = 0; columnIndex < COL_COUNT; columnIndex++)
         {
             Cell value;
-            getValueGrid2D(gridPtr, &value, i, j);
+            getValueGrid2D(gridPtr, &value, rowIndex, columnIndex);
             printValueOfCell(value);
         }
         printf("\n");
@@ -77,10 +75,10 @@ int display2DGrid(Grid2D *gridPtr)
     return SUCCESS;
 }
 
-bool isCellAlive(Grid2D *gridPtr, int i, int j)
+bool isCellAlive(Grid2D *gridPtr, int rowIndex, int columnIndex)
 {
     Cell cell;
-    getValueGrid2D(gridPtr, &cell, i, j);
+    getValueGrid2D(gridPtr, &cell, rowIndex, columnIndex);
     return cell == FULL_CELL;
 }
 
@@ -99,17 +97,17 @@ int calculateAdjacentCells(Grid2D *gridPtr, int i, int j, bool wrapAroundEdges)
             {
                 if (iToCheck == -1)
                 {
-                    iToCheck = COL_SIZE - 1;
+                    iToCheck = ROW_COUNT - 1;
                 }
-                if (iToCheck == COL_SIZE)
+                if (iToCheck == ROW_COUNT)
                 {
                     iToCheck = 0;
                 }
                 if (jToCheck == -1)
                 {
-                    jToCheck = ROW_SIZE - 1;
+                    jToCheck = COL_COUNT - 1;
                 }
-                if (jToCheck == ROW_SIZE - 1)
+                if (jToCheck == COL_COUNT - 1)
                 {
                     jToCheck = 0;
                 }
@@ -123,28 +121,28 @@ int calculateAdjacentCells(Grid2D *gridPtr, int i, int j, bool wrapAroundEdges)
     return liveAdjacentCells;
 }
 
-int getNextGeneration2D(Grid2D *gridPtr, Ruleset2D rulesetForDeadCells, Ruleset2D rulesetForAliveCells, bool wrapAroundEdges)
+int getNextGeneration2D(Grid2D *gridPtr, Ruleset2D ruleset, bool wrapAroundEdges)
 {
     Grid2D oldGrid = *gridPtr;
-    for (int i = 0; i < COL_SIZE; i++)
+    for (int i = 0; i < ROW_COUNT; i++)
     {
-        for (int j = 0; j < ROW_SIZE; j++)
+        for (int j = 0; j < COL_COUNT; j++)
         {
             int liveAdjacentCells = calculateAdjacentCells(&oldGrid, i, j, wrapAroundEdges);
             Cell currentCell;
-            Ruleset2D ruleset;
+            bool *ruleArray;
             getValueGrid2D(gridPtr, &currentCell, i, j);
 
             if (currentCell == FULL_CELL)
             {
-                ruleset = rulesetForAliveCells;
+                ruleArray = ruleset.rulesetForAliveCells;
             }
             else
             {
-                ruleset = rulesetForDeadCells;
+                ruleArray = ruleset.rulesetForDeadCells;
             }
 
-            if (ruleset.ruleArray[liveAdjacentCells])
+            if (ruleArray[liveAdjacentCells])
             {
                 updateGrid2D(gridPtr, i, j, FULL_CELL);
             }
@@ -157,12 +155,12 @@ int getNextGeneration2D(Grid2D *gridPtr, Ruleset2D rulesetForDeadCells, Ruleset2
     return SUCCESS;
 }
 
-int runSimulation2d(Grid2D *gridPtr, Ruleset2D rulesetForDeadCells, Ruleset2D rulesetForAliveCells, bool wrapAroundEdges, int numberOfGenerations)
+int runSimulation2d(Grid2D *gridPtr, Ruleset2D ruleset, bool wrapAroundEdges, int numberOfGenerations)
 {
     display2DGrid(gridPtr);
     for (int i = 0; i < numberOfGenerations; i++)
     {
-        getNextGeneration2D(gridPtr, rulesetForDeadCells, rulesetForAliveCells, wrapAroundEdges);
+        getNextGeneration2D(gridPtr, ruleset, wrapAroundEdges);
         display2DGrid(gridPtr);
     }
     printf("End of simulation");
@@ -187,26 +185,24 @@ int runConwaysGameOfLife(Grid2D *gridPtr, int numberOfGenerations, bool wrapEdge
     // (void)wrapEdges;
     // (void)numberOfGenerations;
     // (void)gridPtr;
-    Ruleset2D *rulesetForDeadCells = (Ruleset2D *)malloc(sizeof(Ruleset2D));
-    Ruleset2D *rulesetForAliveCells = (Ruleset2D *)malloc(sizeof(Ruleset2D));
+    Ruleset2D *ruleset2D = (Ruleset2D *)malloc(sizeof(Ruleset2D));
 
     for (int i = 0; i < 8; i++)
     {
-        rulesetForDeadCells->ruleArray[i] = conwaysGameOfLifeRules[0][i];
-        rulesetForAliveCells->ruleArray[i] = conwaysGameOfLifeRules[1][i];
+        ruleset2D->rulesetForDeadCells[i] = conwaysGameOfLifeRules[0][i];
+        ruleset2D->rulesetForAliveCells[i] = conwaysGameOfLifeRules[1][i];
     }
 
     display2DGrid(gridPtr);
     for (int i = 0; i < numberOfGenerations; i++)
     {
-        getNextGeneration2D(gridPtr, *rulesetForDeadCells, *rulesetForAliveCells, wrapEdges);
+        getNextGeneration2D(gridPtr, *ruleset2D, wrapEdges);
         display2DGrid(gridPtr);
     }
 
     printf("End of simulation");
     // (void) rulesetForDeadCells;
-    free(rulesetForAliveCells);
-    free(rulesetForDeadCells);
+    free(ruleset2D);
 
     return SUCCESS;
 }

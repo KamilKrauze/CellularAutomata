@@ -13,16 +13,7 @@ bool ruleArray[] = {1, 0, 0, 0, 0, 0, 0, 0};
 int main()
 {
 
-    Ruleset2D *rulesetPtr = (Ruleset2D *)malloc(sizeof(Ruleset2D));
-    for (int i = 0; i < 9; i++)
-    {
-        rulesetPtr->ruleArray[i] = ruleArray[i];
-        rulesetPtr->ruleArray[i] = 1;
-    }
-
     Grid2D *gridPtr = initialize2DGrid(EMPTY_CELL);
-
-      
 
     display2DGrid(gridPtr);
     updateGrid2D(gridPtr, 5, 5, FULL_CELL);
@@ -31,14 +22,12 @@ int main()
     updateGrid2D(gridPtr, 6, 6, FULL_CELL);
     updateGrid2D(gridPtr, 5, 6, FULL_CELL);
     display2DGrid(gridPtr);
-    // Ruleset2D ruleset = *rulesetPtr;
-    // getNextGeneration2D(gridPtr, ruleset, ruleset, true);
 
     runConwaysGameOfLife(gridPtr, 1, false);
 
     display2DGrid(gridPtr);
     free(gridPtr);
-    free(rulesetPtr);
+    // free(rulesetPtr);
 
     return 0;
 }
