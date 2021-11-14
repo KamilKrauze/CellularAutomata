@@ -227,8 +227,8 @@ int runSimulation2d(Grid2D *gridPtr, Ruleset2D ruleset, bool wrapAroundEdges, in
 }
 
 bool conwaysGameOfLifeRules[2][9] = {
+    {0, 0, 0, 1, 0, 0, 0, 0, 0},
     {0, 0, 1, 1, 0, 0, 0, 0, 0},
-    {0, 0, 0, 0, 0, 0, 0, 0, 0},
 };
 
 int runConwaysGameOfLife(Grid2D *gridPtr, int numberOfGenerations, bool wrapEdges)

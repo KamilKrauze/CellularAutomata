@@ -14,8 +14,8 @@
 #define EMPTY_CELL '0'
 #define FULL_CELL '1'
 
-#define EMPTY_CELL_SYMBOL 'x'
-#define FULL_CELL_SYMBOL 'o'
+// #define EMPTY_CELL_SYMBOL 'x'
+// #define FULL_CELL_SYMBOL 'o'
 
 #define COL_COUNT 15
 #define ROW_COUNT 5
@@ -45,7 +45,7 @@ typedef struct grid2d
     // https://stackoverflow.com/questions/54795235/flexible-array-of-flexible-arrays-in-c
 } Grid2D;
 
-char getDisplayValueOfCell(Cell value);
+// char getDisplayValueOfCell(Cell value);
 
 bool doCellsMatch(int a, Cell b);
 void printValueOfCell(Cell value);
