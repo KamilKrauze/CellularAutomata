@@ -10,8 +10,14 @@
 #include "system.h"
 bool ruleArray[] = {1, 0, 0, 0, 0, 0, 0, 0};
 
+extern int grid1dColCount;
+extern int grid2dColCount;
+extern int grid2dRowCount;
+
 int main()
 {
+    grid2dColCount = 10;
+    grid2dRowCount = 10;
 
     Grid2D *gridPtr = initialize2DGrid(EMPTY_CELL);
 
@@ -23,11 +29,23 @@ int main()
     updateGrid2D(gridPtr, 5, 6, FULL_CELL);
     display2DGrid(gridPtr);
 
-    runConwaysGameOfLife(gridPtr, 1, false);
+    // runConwaysGameOfLife(gridPtr, 1, false);
 
-    display2DGrid(gridPtr);
-    free(gridPtr);
-    // free(rulesetPtr);
+    // display2DGrid(gridPtr);
 
+    // Grid2D *gridPtr = initialize2DGrid(FULL_CELL);
+    // display2DGrid(gridPtr);
+    // updateGrid2D(gridPtr, 2, 2, EMPTY_CELL);
+    // updateGrid2D(gridPtr, 2, 2, EMPTY_CELL);
+    // updateGrid2D(gridPtr, 2, 3, EMPTY_CELL);
+    // updateGrid2D(gridPtr, 2, 3, EMPTY_CELL);
+    // updateGrid2D(gridPtr, 2, 3, EMPTY_CELL);
+    // display2DGrid(gridPtr);
+    // Cell cell;
+    // getValueGrid2D(gridPtr, &cell, 0, 0);
+    // printf(" Result: %c\n", cell);
+    runConwaysGameOfLife(gridPtr, 3, false);
+
+    free2DGrid(gridPtr);
     return 0;
 }

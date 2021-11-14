@@ -14,8 +14,8 @@
 #define EMPTY_CELL '0'
 #define FULL_CELL '1'
 
-#define EMPTY_CELL_SYMBOL 'x'
-#define FULL_CELL_SYMBOL 'o'
+// #define EMPTY_CELL_SYMBOL 'x'
+// #define FULL_CELL_SYMBOL 'o'
 
 #define COL_COUNT 15
 #define ROW_COUNT 5
@@ -32,17 +32,21 @@ typedef struct ruleset2d
     bool rulesetForAliveCells[9];
 } Ruleset2D;
 
+// https://en.wikipedia.org/wiki/Flexible_array_member
 typedef struct grid1d
 {
-    Cell row[COL_COUNT];
+    char uselessCharForCompileReasons;
+    Cell row[];
 } Grid1D;
 
 typedef struct grid2d
 {
-    Cell table[ROW_COUNT][COL_COUNT];
+    char uselessCharForCompileReasons;
+    Cell *table[];
+    // https://stackoverflow.com/questions/54795235/flexible-array-of-flexible-arrays-in-c
 } Grid2D;
 
-char getDisplayValueOfCell(Cell value);
+// char getDisplayValueOfCell(Cell value);
 
 bool doCellsMatch(int a, Cell b);
 void printValueOfCell(Cell value);
@@ -57,11 +61,11 @@ int display2DGrid(Grid2D *gridPtr);
 
 int updateGrid1D(Grid1D *gridPtr, int column, Cell value);
 
-int updateGrid2D(Grid2D *gridPtr, int column, int row, Cell value);
+int updateGrid2D(Grid2D *gridPtr, int rowIndex, int columnIndex, Cell value);
 
 int getValueGrid1D(Grid1D *gridPtr, Cell *cellPtr, int column);
 
-int getValueGrid2D(Grid2D *gridPtr, Cell *cellPtr, int column, int row);
+int getValueGrid2D(Grid2D *gridPtr, Cell *cellPtr, int rowIndex, int columnIndex);
 
 int getNextGeneration1D(Grid1D *gridPtr, Ruleset ruleset, bool wrapAroundEdges);
 
@@ -72,3 +76,5 @@ int runSimulation1d(Grid1D *gridPtr, Ruleset ruleset, bool wrapAroundEdges, int 
 int runSimulation2d(Grid2D *gridPtr, Ruleset2D ruleset, bool wrapAroundEdges, int numberOfGenerations);
 
 int runConwaysGameOfLife(Grid2D *gridPtr, int numberOfGenerations, bool wrapEdges);
+
+void free2DGrid(Grid2D *gridPtr);

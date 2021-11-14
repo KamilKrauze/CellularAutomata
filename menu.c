@@ -7,7 +7,13 @@
 #else
 #include <unistd.h>
 #endif
+
 #include "system.h"
+
+extern int grid1dColCount;
+extern int grid2dColCount;
+extern int grid2dRowCount;
+
 
 void displayMenu()
 {

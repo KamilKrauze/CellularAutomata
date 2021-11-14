@@ -4,37 +4,40 @@
 
 #include "grid.h"
 
-char getDisplayValueOfCell(Cell value)
-{
-    if (value == EMPTY_CELL)
-    {
-        return EMPTY_CELL_SYMBOL;
-    }
-    else if (value == FULL_CELL)
-    {
-        return FULL_CELL_SYMBOL;
-    }
-    else
-    {
-        return 'X';
-    }
-}
+// Since we're dealing with strings this turned out to be terribly impractical
+// char getDisplayValueOfCell(Cell value)
+// {
+//     if (value == EMPTY_CELL)
+//     {
+//         return EMPTY_CELL_SYMBOL;
+//     }
+//     else if (value == FULL_CELL)
+//     {
+//         return FULL_CELL_SYMBOL;
+//     }
+//     else
+//     {
+//         return 'X';
+//     }
+// }
 
+// https://stackoverflow.com/questions/17362509/how-to-use-symbols-of-extended-ascii-table-in-c4
+// https://stackoverflow.com/questions/26438222/print-a-filled-square-in-console
 void printValueOfCell(Cell value)
 {
     // unsigned char emptyCH = EMPTY_CELL_SYMBOL;
     // unsigned char fullCh = FULL_CELL_SYMBOL;
     if (value == EMPTY_CELL)
     {
-        printf("%c", EMPTY_CELL_SYMBOL);
+        printf("\u25A1");
     }
     else if (value == FULL_CELL)
     {
-        printf("%c", FULL_CELL_SYMBOL);
+        printf("\u25A0");
     }
     else
     {
-        printf("X");
+        printf("!");
     }
 }
 
