@@ -51,8 +51,6 @@ int BinStringtoBinaryNumber(char binaryString[], BinaryNumber *binNumber)
 {
 	if (binaryString == NULL)
 		return 101; // INVALID_INPUT_PARAMETER
-	if (strlen(binaryString) < bitSize)
-		return 101; // INVALID_INPUT_PARAMETER
 	if (binNumber == NULL)
 		binNumber = createBinaryNumber('x');
 
@@ -76,7 +74,7 @@ int convertBINtoDEC(BinaryNumber *binNumber)
 	int decimalNumber = 0;
 	int row = bitSize - (bitSize - 1);
 	int binValue = 1;
-	for (int i = (bitSize - 1); i > 0; i--)
+	for (int i = (bitSize); i > 0; i--)
 	{
 		if (binNumber->binaryNo[i].bit == 'o') //Char comparison - https://stackoverflow.com/questions/17766754/how-to-compare-a-char/17766879 - 11/11/2021
 		{
