@@ -1,3 +1,4 @@
+
 // #include "grid.h"
 // #include <stdio.h>
 // #include <stdlib.h>
@@ -35,19 +36,3 @@
 //     free2DGrid(gridPtr);
 //     return 0;
 // }
-
-    // runConwaysGameOfLife(gridPtr, 1, false);
-
-    // display2DGrid(gridPtr);
-
-    // Grid2D *gridPtr = initialize2DGrid(FULL_CELL);
-    // display2DGrid(gridPtr);
-    // updateGrid2D(gridPtr, 2, 2, EMPTY_CELL);
-    // updateGrid2D(gridPtr, 2, 2, EMPTY_CELL);
-    // updateGrid2D(gridPtr, 2, 3, EMPTY_CELL);
-    // updateGrid2D(gridPtr, 2, 3, EMPTY_CELL);
-    // updateGrid2D(gridPtr, 2, 3, EMPTY_CELL);
-    // display2DGrid(gridPtr);
-    // Cell cell;
-    // getValueGrid2D(gridPtr, &cell, 0, 0);
-    // printf(" Result: %c\n", cell);
