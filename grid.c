@@ -4,6 +4,7 @@
 
 #include "grid.h"
 
+// Since we're dealing with strings this turned out to be terribly impractical
 // char getDisplayValueOfCell(Cell value)
 // {
 //     if (value == EMPTY_CELL)
@@ -20,6 +21,8 @@
 //     }
 // }
 
+// https://stackoverflow.com/questions/17362509/how-to-use-symbols-of-extended-ascii-table-in-c4
+// https://stackoverflow.com/questions/26438222/print-a-filled-square-in-console
 void printValueOfCell(Cell value)
 {
     // unsigned char emptyCH = EMPTY_CELL_SYMBOL;

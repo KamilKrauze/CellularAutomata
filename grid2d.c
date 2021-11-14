@@ -1,13 +1,13 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdbool.h>
-#include <cstring>
 
 #include "grid.h"
 
 //
 // 2D grid
 
+// https://stackoverflow.com/questions/6792930/how-do-i-share-a-global-variable-between-c-files/6792967
 int grid2dRowCount = 8;
 int grid2dColCount = 15;
 
@@ -155,6 +155,8 @@ int calculateAdjacentCells(Grid2D *gridPtr, int i, int j, bool wrapAroundEdges)
     return liveAdjacentCells;
 }
 
+
+// https://stackoverflow.com/questions/13284033/copying-structure-in-c-with-assignment-instead-of-memcpy
 Grid2D *getGrid2DCopy(Grid2D *gridPtr)
 {
     Grid2D *oldGridCopyPtr = initialize2DGrid(EMPTY_CELL);

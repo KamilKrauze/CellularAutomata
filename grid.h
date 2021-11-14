@@ -32,6 +32,7 @@ typedef struct ruleset2d
     bool rulesetForAliveCells[9];
 } Ruleset2D;
 
+// https://en.wikipedia.org/wiki/Flexible_array_member
 typedef struct grid1d
 {
     char uselessCharForCompileReasons;
