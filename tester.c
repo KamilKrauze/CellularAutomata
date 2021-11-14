@@ -30,8 +30,8 @@ int main()
     // runConwaysGameOfLife(gridPtr, 1, false);
 
     // display2DGrid(gridPtr);
-    grid2dColCount = 50;
-    grid2dRowCount = 4;
+    grid2dColCount = 5;
+    grid2dRowCount = 3;
     Grid2D *gridPtr = initialize2DGrid(FULL_CELL);
     display2DGrid(gridPtr);
     updateGrid2D(gridPtr, 2, 2, EMPTY_CELL);
@@ -43,7 +43,7 @@ int main()
     Cell cell;
     getValueGrid2D(gridPtr, &cell, 0, 0);
     printf(" Result: %c\n", cell);
-    // runConwaysGameOfLife(gridPtr, 1, false);
+    runConwaysGameOfLife(gridPtr, 1, false);
 
     free2DGrid(gridPtr);
 

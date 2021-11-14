@@ -23,7 +23,7 @@ Grid1D *initialize1DGrid(Cell defaultValue)
 
 int updateGrid1D(Grid1D *gridPtr, int column, Cell value)
 {
-    if (gridPtr == NULL || column < 0 || column > grid1dColCount)
+    if (gridPtr == NULL || column < 0 || column >= grid1dColCount)
     {
         return INVALID_INPUT_PARAMETER;
     }
@@ -33,7 +33,7 @@ int updateGrid1D(Grid1D *gridPtr, int column, Cell value)
 
 int getValueGrid1D(Grid1D *gridPtr, Cell *target, int column)
 {
-    if (gridPtr == NULL || column < 0 || column > grid1dColCount)
+    if (gridPtr == NULL || column < 0 || column >= grid1dColCount)
     {
         *target = OUT_OF_BOUNDS;
         return INVALID_INPUT_PARAMETER;
