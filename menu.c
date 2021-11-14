@@ -139,6 +139,76 @@ void determineChoice_BinConv()
 	}
 }
 
+void displayMenu_1D()
+{
+	printf("========================================\n");
+	printf("\t\t1D GRID\n");
+	printf("========================================\n\n");
+	printf("\t1. - Alter 1D Grid\n");
+	printf("\t2. - Run Simulation\n");
+	printf("\t3. - Exit to main menu\n");
+}
+
+void determineChoice_1D()
+{
+	int usrChoice = 0;
+	Grid1D *pGrid1D = initialize1DGrid('x');
+
+	while (usrChoice != -1)
+	{
+		clear();
+		
+		displayMenu_1D();
+		display1DGrid(pGrid1D);
+		
+		printf("User: ");
+		scanf("%d", &usrChoice);
+
+		switch (usrChoice)
+		{
+		case 1: // Alter 1D Grid
+			clear();
+
+			int colNo=-1;
+			char cellVal='@';
+			while(true)
+			{
+				if(colNo == -1)
+				{
+					printf("Column Number: ");
+					scanf("%d", &colNo);
+				}
+
+				if(cellVal != 'x' || cellVal != 'o')
+				{	
+					printf("Cell Number (x or o): ");
+					scanf("%c", &cellVal);
+				}
+
+				if( colNo != -1 && (cellVal == 'x' || cellVal == 'o') )
+				{
+					updateGrid1D(pGrid1D, colNo, cellVal);
+					break;
+				}
+				else
+					continue;
+			}
+			
+			break;
+		case 2: // Run Simulation
+			clear();
+			runSimulation1d(pGrid1D, )
+			break;
+		case 3: // Exit Program
+			usrChoice = -1;
+			break;S
+		default:
+			clear();
+			displayMenu_1D();
+		}
+	}
+}
+
 void determineChoice_MainMenu()
 {
 	int usrChoice = 0;
@@ -158,7 +228,7 @@ void determineChoice_MainMenu()
 			break;
 		case 2: // 1D Grid
 			clear();
-			
+			determineChoice_1D();
 			break;
 		case 5: // Exit Program
 			_exit(0);
