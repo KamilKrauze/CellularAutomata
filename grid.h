@@ -18,7 +18,7 @@
 #define FULL_CELL_SYMBOL 'o'
 
 #define ROW_SIZE 15
-#define COL_SIZE 10
+#define COL_SIZE 15
 
 typedef char Cell;
 

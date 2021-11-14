@@ -19,16 +19,20 @@ Grid2D *initialize2DGrid(Cell defaultValue)
     {
         for (int j = 0; j < ROW_SIZE; j++)
         {
-            gridPtr->table[i][j] = defaultValue;
+            // gridPtr->table[i][j] = i;
+            updateGrid2D(gridPtr, i, j, defaultValue);
+            // printf("Initializing %d, %d, \n", i, j);
         }
     }
+    (void)defaultValue;
     return gridPtr;
 }
 
 int updateGrid2D(Grid2D *gridPtr, int row, int column, Cell value)
 {
-    if (gridPtr == NULL || column < 0 || column > ROW_SIZE)
+    if (gridPtr == NULL || column < 0 || column > COL_SIZE || row < 0 || row > ROW_SIZE)
     {
+        printf("INVALID INPUT PARAMETER");
         return INVALID_INPUT_PARAMETER;
     }
     gridPtr->table[column][row] = value;
@@ -37,8 +41,13 @@ int updateGrid2D(Grid2D *gridPtr, int row, int column, Cell value)
 
 int getValueGrid2D(Grid2D *gridPtr, Cell *target, int row, int column)
 {
-    if (gridPtr == NULL || column < 0 || column > ROW_SIZE)
+    if (gridPtr == NULL || column < 0 || column > COL_SIZE || row < 0 || row > ROW_SIZE)
     {
+        *target = OUT_OF_BOUNDS;
+        // printf("INVALID INPUT PARAMETER"); 
+        
+
+
         return INVALID_INPUT_PARAMETER;
     }
     *target = gridPtr->table[column][row];

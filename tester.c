@@ -22,6 +22,8 @@ int main()
 
     Grid2D *gridPtr = initialize2DGrid(EMPTY_CELL);
 
+      
+
     display2DGrid(gridPtr);
     updateGrid2D(gridPtr, 5, 5, FULL_CELL);
     updateGrid2D(gridPtr, 6, 5, FULL_CELL);
@@ -29,14 +31,14 @@ int main()
     updateGrid2D(gridPtr, 6, 6, FULL_CELL);
     updateGrid2D(gridPtr, 5, 6, FULL_CELL);
     display2DGrid(gridPtr);
-    Ruleset2D ruleset = *rulesetPtr;
-    getNextGeneration2D(gridPtr, ruleset, ruleset, true);
+    // Ruleset2D ruleset = *rulesetPtr;
+    // getNextGeneration2D(gridPtr, ruleset, ruleset, true);
 
     runConwaysGameOfLife(gridPtr, 1, false);
 
     display2DGrid(gridPtr);
     free(gridPtr);
-
     free(rulesetPtr);
+
     return 0;
 }
