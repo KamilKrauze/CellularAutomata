@@ -7,17 +7,22 @@
 //
 // 2D grid
 
+int grid2dRowCount = 8;
+int grid2dColCount = 15;
+
+// https://stackoverflow.com/questions/54795235/flexible-array-of-flexible-arrays-in-c
 Grid2D *initialize2DGrid(Cell defaultValue)
 {
-    Grid2D *gridPtr = (Grid2D *)malloc(sizeof(Grid2D));
+    Grid2D *gridPtr = (Grid2D *)malloc(sizeof(Grid2D) + grid2dRowCount * sizeof(Cell *));
 
     if (gridPtr == NULL)
     {
         return NULL;
     }
-    for (int rowIndex = 0; rowIndex < ROW_COUNT; rowIndex++)
+    for (int rowIndex = 0; rowIndex < grid2dRowCount; rowIndex++)
     {
-        for (int columnIndex = 0; columnIndex < COL_COUNT; columnIndex++)
+        gridPtr->table[rowIndex] = (Cell *)malloc(sizeof(Cell) * grid2dColCount);
+        for (int columnIndex = 0; columnIndex < grid2dColCount; columnIndex++)
         {
             // gridPtr->table[i][j] = i;
             updateGrid2D(gridPtr, rowIndex, columnIndex, defaultValue);
@@ -28,9 +33,18 @@ Grid2D *initialize2DGrid(Cell defaultValue)
     return gridPtr;
 }
 
+void free2DGrid(Grid2D *gridPtr)
+{
+    for (int rowIndex = 0; rowIndex < grid2dRowCount; rowIndex++)
+    {
+        free(gridPtr->table[rowIndex]);
+    }
+    free(gridPtr);
+}
+
 int updateGrid2D(Grid2D *gridPtr, int rowIndex, int columnIndex, Cell value)
 {
-    if (gridPtr == NULL || columnIndex < 0 || columnIndex > COL_COUNT || rowIndex < 0 || rowIndex > ROW_COUNT)
+    if (gridPtr == NULL || columnIndex < 0 || columnIndex > grid2dColCount || rowIndex < 0 || rowIndex > grid2dRowCount)
     {
         printf("INVALID INPUT PARAMETER");
         return INVALID_INPUT_PARAMETER;
@@ -41,7 +55,7 @@ int updateGrid2D(Grid2D *gridPtr, int rowIndex, int columnIndex, Cell value)
 
 int getValueGrid2D(Grid2D *gridPtr, Cell *target, int rowIndex, int columnIndex)
 {
-    if (gridPtr == NULL || columnIndex < 0 || columnIndex > COL_COUNT || rowIndex < 0 || rowIndex > ROW_COUNT)
+    if (gridPtr == NULL || columnIndex < 0 || columnIndex > grid2dColCount || rowIndex < 0 || rowIndex > grid2dRowCount)
     {
         *target = OUT_OF_BOUNDS;
         // printf("INVALID INPUT PARAMETER");
@@ -60,9 +74,9 @@ int display2DGrid(Grid2D *gridPtr)
     }
     printf("\n\n");
 
-    for (int rowIndex = 0; rowIndex < ROW_COUNT; rowIndex++)
+    for (int rowIndex = 0; rowIndex < grid2dRowCount; rowIndex++)
     {
-        for (int columnIndex = 0; columnIndex < COL_COUNT; columnIndex++)
+        for (int columnIndex = 0; columnIndex < grid2dColCount; columnIndex++)
         {
             Cell value;
             getValueGrid2D(gridPtr, &value, rowIndex, columnIndex);
@@ -75,11 +89,14 @@ int display2DGrid(Grid2D *gridPtr)
     return SUCCESS;
 }
 
+Cell temporaryCell;
 bool isCellAlive(Grid2D *gridPtr, int rowIndex, int columnIndex)
 {
-    Cell cell;
-    getValueGrid2D(gridPtr, &cell, rowIndex, columnIndex);
-    return cell == FULL_CELL;
+    printf("Checking cell at row: %d and column: %d", rowIndex, columnIndex);
+
+    getValueGrid2D(gridPtr, &temporaryCell, rowIndex, columnIndex);
+    printf(" Result: %c\n", temporaryCell);
+    return temporaryCell == FULL_CELL;
 }
 
 int calculateAdjacentCells(Grid2D *gridPtr, int i, int j, bool wrapAroundEdges)
@@ -90,6 +107,7 @@ int calculateAdjacentCells(Grid2D *gridPtr, int i, int j, bool wrapAroundEdges)
     {
         for (int loopJ = -1; loopJ <= 1; loopJ++)
         {
+
             int iToCheck = i + loopI;
             int jToCheck = j + loopJ;
 
@@ -97,37 +115,41 @@ int calculateAdjacentCells(Grid2D *gridPtr, int i, int j, bool wrapAroundEdges)
             {
                 if (iToCheck == -1)
                 {
-                    iToCheck = ROW_COUNT - 1;
+                    iToCheck = grid2dRowCount - 1;
                 }
-                if (iToCheck == ROW_COUNT)
+                if (iToCheck == grid2dRowCount)
                 {
                     iToCheck = 0;
                 }
                 if (jToCheck == -1)
                 {
-                    jToCheck = COL_COUNT - 1;
+                    jToCheck = grid2dColCount - 1;
                 }
-                if (jToCheck == COL_COUNT - 1)
+                if (jToCheck == grid2dColCount - 1)
                 {
                     jToCheck = 0;
                 }
             }
+
             if (isCellAlive(gridPtr, iToCheck, jToCheck))
             {
                 liveAdjacentCells++;
             }
         }
     }
+    printf("Live cells %d\n", liveAdjacentCells);
+
     return liveAdjacentCells;
 }
 
 int getNextGeneration2D(Grid2D *gridPtr, Ruleset2D ruleset, bool wrapAroundEdges)
 {
     Grid2D oldGrid = *gridPtr;
-    for (int i = 0; i < ROW_COUNT; i++)
+    for (int i = 0; i < grid2dRowCount; i++)
     {
-        for (int j = 0; j < COL_COUNT; j++)
+        for (int j = 0; j < grid2dColCount; j++)
         {
+
             int liveAdjacentCells = calculateAdjacentCells(&oldGrid, i, j, wrapAroundEdges);
             Cell currentCell;
             bool *ruleArray;
@@ -174,18 +196,8 @@ bool conwaysGameOfLifeRules[2][9] = {
 
 int runConwaysGameOfLife(Grid2D *gridPtr, int numberOfGenerations, bool wrapEdges)
 {
-    // int *p = (int *)malloc(sizeof(int));
-    // if (p == NULL)
-    // {
-    //     printf("Mem alloc error");
-    //     return MEMORY_ALLOCATION_ERROR;
-    // }
-    // free(p);
-
-    // (void)wrapEdges;
-    // (void)numberOfGenerations;
-    // (void)gridPtr;
-    Ruleset2D *ruleset2D = (Ruleset2D *)malloc(sizeof(Ruleset2D));
+ 
+     Ruleset2D *ruleset2D = (Ruleset2D *)malloc(sizeof(Ruleset2D));
 
     for (int i = 0; i < 8; i++)
     {
@@ -193,14 +205,17 @@ int runConwaysGameOfLife(Grid2D *gridPtr, int numberOfGenerations, bool wrapEdge
         ruleset2D->rulesetForAliveCells[i] = conwaysGameOfLifeRules[1][i];
     }
 
+    printf("Starting Conways game of life\n");
+
     display2DGrid(gridPtr);
     for (int i = 0; i < numberOfGenerations; i++)
     {
+        printf("Generation %d\n", i);
         getNextGeneration2D(gridPtr, *ruleset2D, wrapEdges);
         display2DGrid(gridPtr);
     }
 
-    printf("End of simulation");
+    printf("End of simulation\n");
     // (void) rulesetForDeadCells;
     free(ruleset2D);
 
