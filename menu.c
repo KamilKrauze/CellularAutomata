@@ -145,8 +145,9 @@ void displayMenu_1D()
 	printf("\t\t1D GRID\n");
 	printf("========================================\n\n");
 	printf("\t1. - Alter 1D Grid\n");
-	printf("\t2. - Run Simulation\n");
-	printf("\t3. - Exit to main menu\n");
+	printf("\t2. - Change rules\n");
+	printf("\t3. - Run Simulation\n");
+	printf("\t4. - Exit to main menu\n");
 }
 
 void determineChoice_1D()
@@ -170,7 +171,7 @@ void determineChoice_1D()
 			clear();
 
 			int colNo=-1;
-			char cellVal='@';
+			int cellVal=-1;
 			while(true)
 			{
 				if(colNo == -1)
@@ -179,29 +180,36 @@ void determineChoice_1D()
 					scanf("%d", &colNo);
 				}
 
-				if(cellVal != 'x' || cellVal != 'o')
+				if(cellVal != 1 || cellVal != 0)
 				{	
-					printf("Cell Number (x or o): ");
-					scanf("%c", &cellVal);
+					printf("Cell Number (0 for dead, 1 for alive): ");
+					scanf("%d", &cellVal);
 				}
 
-				if( colNo != -1 && (cellVal == 'x' || cellVal == 'o') )
+				if( colNo != -1 && (cellVal == 1 || cellVal == 0) )
 				{
-					updateGrid1D(pGrid1D, colNo, cellVal);
-					break;
+					if(cellVal == 1)
+						updateGrid1D(pGrid1D, colNo, FULL_CELL);
+					else
+						updateGrid1D(pGrid1D, colNo, EMPTY_CELL);
 				}
 				else
 					continue;
 			}
 			
 			break;
-		case 2: // Run Simulation
-			clear();
-			runSimulation1d(pGrid1D, )
+		case 2:
+
+			
+
 			break;
-		case 3: // Exit Program
+		case 3: // Run Simulation
+			clear();
+			//runSimulation1d(pGrid1D, ruleset1D, false, 10);
+			break;
+		case 4: // Exit Program
 			usrChoice = -1;
-			break;S
+			break;
 		default:
 			clear();
 			displayMenu_1D();
