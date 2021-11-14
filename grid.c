@@ -30,6 +30,7 @@ void printValueOfCell(Cell value)
     if (value == EMPTY_CELL)
     {
         printf("\u25A1");
+        // printf(" ");
     }
     else if (value == FULL_CELL)
     {
@@ -56,3 +57,110 @@ bool doCellsMatch(int a, Cell b)
     return false;
 }
 
+int displayRuleset1D(Ruleset ruleset)
+{
+    printf("\nRuleset: \n");
+
+    printf(" ");
+    printValueOfCell(FULL_CELL);
+    printValueOfCell(FULL_CELL);
+    printValueOfCell(FULL_CELL);
+    printf(" ");
+    //
+    printf(" ");
+    printValueOfCell(FULL_CELL);
+    printValueOfCell(FULL_CELL);
+    printValueOfCell(EMPTY_CELL);
+    printf(" ");
+    //
+    printf(" ");
+    printValueOfCell(FULL_CELL);
+    printValueOfCell(EMPTY_CELL);
+    printValueOfCell(FULL_CELL);
+    printf(" ");
+    //
+    printf(" ");
+    printValueOfCell(FULL_CELL);
+    printValueOfCell(EMPTY_CELL);
+    printValueOfCell(EMPTY_CELL);
+    printf(" ");
+    //
+    printf(" ");
+    printValueOfCell(EMPTY_CELL);
+    printValueOfCell(FULL_CELL);
+    printValueOfCell(FULL_CELL);
+    printf(" ");
+    //
+    printf(" ");
+    printValueOfCell(EMPTY_CELL);
+    printValueOfCell(FULL_CELL);
+    printValueOfCell(EMPTY_CELL);
+    printf(" ");
+    //
+    printf(" ");
+    printValueOfCell(EMPTY_CELL);
+    printValueOfCell(EMPTY_CELL);
+    printValueOfCell(FULL_CELL);
+    printf(" ");
+    //
+    printf(" ");
+    printValueOfCell(EMPTY_CELL);
+    printValueOfCell(EMPTY_CELL);
+    printValueOfCell(EMPTY_CELL);
+    printf(" ");
+    //
+    printf("\n");
+    for (int i = 0; i < 8; i++)
+    {
+        if (ruleset.ruleArray[i])
+        {
+            printf("  ");
+            printValueOfCell(FULL_CELL);
+            printf("  ");
+        }
+        else
+        {
+            printf("  ");
+            printValueOfCell(EMPTY_CELL);
+            printf("  ");
+        }
+    }
+    printf("\n");
+
+    for (int i = 0; i < 8; i++)
+    {
+
+        printf("  %d  ", ruleset.ruleArray[i]);
+    }
+    printf("\n");
+    printf("\n");
+    return SUCCESS;
+}
+void helperDisplayFunction(bool ruleArray[9])
+{
+    printf("\nNumber of adjacent cells:");
+
+    for (int i = 0; i < 9; i++)
+    {
+        printf(" %d ", i);
+    }
+    printf("\nResult:                  ");
+    for (int i = 0; i < 9; i++)
+    {
+        printf(" %d ", ruleArray[i]);
+    }
+    printf("\n");
+}
+
+int displayRuleset2D(Ruleset2D ruleset)
+{
+    printf("\nRuleset for living cells: \n");
+
+    helperDisplayFunction(ruleset.rulesetForAliveCells);
+
+    printf("\nRuleset for dead cells: \n");
+
+    helperDisplayFunction(ruleset.rulesetForDeadCells);
+
+    return SUCCESS;
+}

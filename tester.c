@@ -16,18 +16,18 @@ extern int grid2dRowCount;
 
 int main()
 {
-    grid2dColCount = 10;
-    grid2dRowCount = 10;
+    // grid2dColCount = 10;
+    // grid2dRowCount = 10;
 
-    Grid2D *gridPtr = initialize2DGrid(EMPTY_CELL);
+    // Grid2D *gridPtr = initialize2DGrid(EMPTY_CELL);
 
-    display2DGrid(gridPtr);
-    updateGrid2D(gridPtr, 5, 5, FULL_CELL);
-    updateGrid2D(gridPtr, 6, 5, FULL_CELL);
-    updateGrid2D(gridPtr, 6, 7, FULL_CELL);
-    updateGrid2D(gridPtr, 6, 6, FULL_CELL);
-    updateGrid2D(gridPtr, 5, 6, FULL_CELL);
-    display2DGrid(gridPtr);
+    // display2DGrid(gridPtr);
+    // updateGrid2D(gridPtr, 5, 5, FULL_CELL);
+    // updateGrid2D(gridPtr, 6, 5, FULL_CELL);
+    // updateGrid2D(gridPtr, 6, 7, FULL_CELL);
+    // updateGrid2D(gridPtr, 6, 6, FULL_CELL);
+    // updateGrid2D(gridPtr, 5, 6, FULL_CELL);
+    // display2DGrid(gridPtr);
 
     // runConwaysGameOfLife(gridPtr, 1, false);
 
@@ -44,8 +44,15 @@ int main()
     // Cell cell;
     // getValueGrid2D(gridPtr, &cell, 0, 0);
     // printf(" Result: %c\n", cell);
-    runConwaysGameOfLife(gridPtr, 3, false);
+    // runConwaysGameOfLife(gridPtr, 3, false);
+    Ruleset* ruleset = (Ruleset *)malloc(sizeof(Ruleset));
+    for (int i = 0; i < 8; i++)
+    {
+        ruleset->ruleArray[i]=ruleArray[i];
+    }
+    displayRuleset1D(*ruleset);
+    
 
-    free2DGrid(gridPtr);
+    // free2DGrid(gridPtr);
     return 0;
 }

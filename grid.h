@@ -51,6 +51,9 @@ typedef struct grid2d
 bool doCellsMatch(int a, Cell b);
 void printValueOfCell(Cell value);
 
+int displayRuleset1D(Ruleset ruleset);
+int displayRuleset2D(Ruleset2D ruleset);
+
 Grid1D *initialize1DGrid(Cell defaultValue);
 
 Grid2D *initialize2DGrid(Cell defaultValue);
