@@ -11,7 +11,9 @@
 int grid2dRowCount = 8;
 int grid2dColCount = 15;
 
+//
 // https://stackoverflow.com/questions/54795235/flexible-array-of-flexible-arrays-in-c
+//
 Grid2D *initialize2DGrid(Cell defaultValue)
 {
     Grid2D *gridPtr = (Grid2D *)malloc(sizeof(Grid2D) + grid2dRowCount * sizeof(Cell *));
@@ -31,9 +33,7 @@ Grid2D *initialize2DGrid(Cell defaultValue)
         gridPtr->table[rowIndex] = arr;
         for (int columnIndex = 0; columnIndex < grid2dColCount; columnIndex++)
         {
-            // gridPtr->table[i][j] = i;
             updateGrid2D(gridPtr, rowIndex, columnIndex, defaultValue);
-            // printf("Initializing %d, %d, \n", rowIndex, columnIndex);
         }
     }
     // (void)defaultValue;
