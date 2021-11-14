@@ -152,7 +152,7 @@ void displayMenu_1D()
 void determineChoice_1D()
 {
 	int usrChoice = 0;
-	Grid1D *pGrid1D = initialize1DGrid('x');
+	Grid1D *pGrid1D = initialize1DGrid(EMPTY_CELL);
 
 	while (usrChoice != -1)
 	{
