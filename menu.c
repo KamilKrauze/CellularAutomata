@@ -1,6 +1,6 @@
-#include "grid.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 // Add sleep function into program - https://stackoverflow.com/questions/14818084/what-is-the-proper-include-for-the-function-sleep - 11/11/2021
 #ifdef _WIN32
 #include <Windows.h>
@@ -9,6 +9,9 @@
 #endif
 
 #include "system.h"
+#include "grid.h"
+#include "menu.h"
+#include "binConv.h"
 
 extern int grid1dColCount;
 extern int grid2dColCount;
@@ -20,196 +23,222 @@ void displayMenu()
 	printf("========================================\n");
 	printf("\t\tWELCOME !\n");
 	printf("========================================\n\n");
-	printf("\t1. - Create 1D Grid\n");
-	printf("\t2. - Create 2D Grid\n");
-	printf("\t3. - Create 3D Grid\n");
-	printf("\t4. - Run tester\n");
-
+	printf("\t1. - Binary Converter\n");
+	printf("\t2. - 1D Grid\n");
 	printf("\t5. - Exit\n");
 }
 
-void create1D_subMenu()
+void displayMenu_BinConv()
 {
-	printf("\n\n========================================\n");
-	printf("\t\t1D GRID !\n");
+	printf("========================================\n");
+	printf("\t    BINARY CONVERTER\n");
 	printf("========================================\n\n");
-	printf("\t1. - Read from file\n");
-	printf("\t2. - Write to file\n");
-	printf("\t3. - Initialize grid\n");
-	printf("\t4. - Back to Main Menu\n");
-	printf("\t5. - Exit\n");
+	printf("\t1. - Create binary number\n");
+	printf("\t2. - Toggle show binary number\n");
+	printf("\t3. - Toggle show decimal number\n");
+	printf("\t4. - Convert decimal number to binary number\n");
+	printf("\t5. - Save binary number to text file\n");
+	printf("\t6. - Get binary number from file\n");
+	printf("\t7. - Exit to main menu\n");
 }
 
-void create2D_subMenu()
+void determineChoice_BinConv()
 {
-	printf("\n\n========================================\n");
-	printf("\t\t2D GRID !\n");
-	printf("========================================\n\n");
-	printf("\t1. - Read from file\n");
-	printf("\t2. - Write to file\n");
-	printf("\t3. - Initialize grid\n");
-	printf("\t4. - Back to Main Menu\n");
-	printf("\t5. - Exit\n");
-}
-
-void create3D_subMenu()
-{
-	printf("\n\n========================================\n");
-	printf("\t\t2D GRID !\n");
-	printf("========================================\n\n");
-	printf("\t1. - Read from file\n");
-	printf("\t2. - Write to file\n");
-	printf("\t3. - Initialize grid\n");
-	printf("\t4. - Back to Main Menu\n");
-	printf("\t5. - Exit\n");
-}
-
-void determineChoice_1DGrid()
-{
-
-	create1D_subMenu();
 	int usrChoice = 0;
+	
+	BinaryNumber* binNumber = createBinaryNumber('x');
+	int DECnumber = 0;
+	bool showBinNumber = false;
+	bool showDECNumber = false;
 
 	while (usrChoice != -1)
 	{
-		printf("User: ");
+		clear();
+		displayMenu_BinConv();
+		
+		if(showBinNumber == true)
+		{
+			printf("\nBIN: ");
+			displayBinaryNumber(binNumber);
+		}
+
+		if(showDECNumber == true)
+		{
+			printf("\nDEC: %d", DECnumber);
+		}
+		
+		printf("\nUser: ");
 		scanf("%d", &usrChoice);
 
 		switch (usrChoice)
 		{
-		case 1:
+		
+		case 1: // Create binary number
 			clear();
-			// Read file
+			
+			char binString[bitSize];
+			
+			printf("Enter a valid 8-bit binary number below: \n\n\tExample: oxooxoox\n\nUser: ");
+			scanf("%s", binString);
+			
+			BinStringtoBinaryNumber(binString, binNumber);
+			DECnumber = convertBINtoDEC(binNumber);
+			
 			break;
-		case 2:
+		
+		case 2: // Display binary number
+			showBinNumber = !showBinNumber; // Bool flip-flop switch
+			break;
+		
+		case 3: // Convert binary number to decimal number
 			clear();
-			// Write to file
+			showDECNumber = !showDECNumber;
 			break;
-		case 3:
+		
+		case 4: // Convert decimal number to binary number
 			clear();
-			// Initialize grid
+			printf("Enter a valid integer between 0-255: ");
+			while(true)
+			{
+				scanf("%d", &DECnumber);
+				if(DECnumber >= 0 && DECnumber <= 255)
+				{
+					convertDECtoBIN(binNumber, DECnumber);
+					break;
+				}
+			}
 			break;
-		case 4:
+		
+		case 5: // Save binary number to text file
 			clear();
-			displayMenu();
+			char* filepath = (char*)malloc(sizeof(char));
+			if(filepath == NULL)
+			{
+				printf("Memory allocation error. Please try again");
+			}
+			printf("Please enter a file path.\nData will be appended to a file that exists\nIf the file does not exist a new one will be created with the provided name.\nExample: ../filename.txt\n");
+			scanf("%s", filepath);
+			saveBinaryToFile(filepath, binNumber, DECnumber);
+			
 			break;
-		case 5:
-			_exit(0);
+		
+		case 6: // Get binary number from file
+			clear();
+
 			break;
+		
+		case 7: // Exit bin converter
+			free(binNumber);
+			usrChoice = -1;
+			break;
+		
 		default:
 			clear();
-			create1D_subMenu();
+			displayMenu_BinConv();
 		}
 	}
 }
 
-void determineChoice_2DGrid()
+void displayMenu_1D()
 {
-
-	create2D_subMenu();
-	int usrChoice = 0;
-
-	while (usrChoice != -1)
-	{
-		printf("User: ");
-		scanf("%d", &usrChoice);
-
-		switch (usrChoice)
-		{
-		case 1:
-			clear();
-			// Read file
-			break;
-		case 2:
-			clear();
-			// Write to file
-			break;
-		case 3:
-			clear();
-			// Initialize grid
-			break;
-		case 4:
-			clear();
-			displayMenu();
-			break;
-		case 5:
-			_exit(0);
-			break;
-		default:
-			clear();
-			create2D_subMenu();
-		}
-	}
+	printf("========================================\n");
+	printf("\t\t1D GRID\n");
+	printf("========================================\n\n");
+	printf("\t1. - Alter 1D Grid\n");
+	printf("\t2. - Change rules\n");
+	printf("\t3. - Run Simulation\n");
+	printf("\t4. - Exit to main menu\n");
 }
-void determineChoice_3DGrid()
-{
 
-	create3D_subMenu();
+void determineChoice_1D()
+{
 	int usrChoice = 0;
+	Grid1D *pGrid1D = initialize1DGrid(EMPTY_CELL);
 
 	while (usrChoice != -1)
 	{
+		clear();
+		
+		displayMenu_1D();
+		display1DGrid(pGrid1D);
+		
 		printf("User: ");
 		scanf("%d", &usrChoice);
 
 		switch (usrChoice)
 		{
-		case 1:
+		case 1: // Alter 1D Grid
 			clear();
-			// Read file
+
+			int colNo=-1;
+			int cellVal=-1;
+			while(true)
+			{
+				if(colNo == -1)
+				{
+					printf("Column Number: ");
+					scanf("%d", &colNo);
+				}
+
+				if(cellVal != 1 || cellVal != 0)
+				{	
+					printf("Cell Number (0 for dead, 1 for alive): ");
+					scanf("%d", &cellVal);
+				}
+
+				if( colNo != -1 && (cellVal == 1 || cellVal == 0) )
+				{
+					if(cellVal == 1)
+						updateGrid1D(pGrid1D, colNo, FULL_CELL);
+					else
+						updateGrid1D(pGrid1D, colNo, EMPTY_CELL);
+				}
+				else
+					continue;
+			}
+			
 			break;
 		case 2:
-			clear();
-			// Write to file
+
+			
+
 			break;
-		case 3:
+		case 3: // Run Simulation
 			clear();
-			// Initialize grid
+			//runSimulation1d(pGrid1D, ruleset1D, false, 10);
 			break;
-		case 4:
-			clear();
-			displayMenu();
-			break;
-		case 5:
-			_exit(0);
+		case 4: // Exit Program
+			usrChoice = -1;
 			break;
 		default:
 			clear();
-			create3D_subMenu();
+			displayMenu_1D();
 		}
 	}
 }
 
 void determineChoice_MainMenu()
 {
-
-	displayMenu();
 	int usrChoice = 0;
 
 	while (usrChoice != -1)
 	{
+		clear();
+		displayMenu();
 		printf("User: ");
 		scanf("%d", &usrChoice);
 
 		switch (usrChoice)
 		{
-		case 1:
+		case 1: // Binary Number Converter
 			clear();
-			determineChoice_1DGrid();
+			determineChoice_BinConv();
 			break;
-		case 2:
+		case 2: // 1D Grid
 			clear();
-			determineChoice_2DGrid();
+			determineChoice_1D();
 			break;
-		case 3:
-			clear();
-			determineChoice_3DGrid();
-			break;
-		case 4:
-			clear();
-			// RUN TEST FUNCTION
-			break;
-		case 5:
+		case 5: // Exit Program
 			_exit(0);
 			break;
 		default:
