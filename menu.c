@@ -13,9 +13,6 @@
 #include "menu.h"
 #include "binConv.h"
 
-extern int grid1dColCount;
-extern int grid2dColCount;
-extern int grid2dRowCount;
 
 
 void displayMenu()

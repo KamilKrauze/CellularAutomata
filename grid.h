@@ -20,6 +20,11 @@
 #define COL_COUNT 15
 #define ROW_COUNT 5
 
+extern int grid1dColCount;
+extern int grid2dColCount;
+extern int grid2dRowCount;
+
+
 typedef char Cell;
 
 typedef struct ruleset
