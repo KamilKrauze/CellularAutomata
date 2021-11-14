@@ -224,6 +224,7 @@ void determineChoice_1D()
 					char binString[bitSize];
 					printf("Please enter a binary number (x or o): ");
 					scanf("%s", binString);
+					BinStringtoBinaryNumber(binString, binNumber);
 				}
 			}
 
