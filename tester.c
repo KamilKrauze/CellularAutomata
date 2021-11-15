@@ -1,3 +1,8 @@
+/**
+ * Student Name: Vojtech Loskot
+ * Matric Number: 2424633
+ * 
+ */
 
 // #include "grid.h"
 // #include <stdio.h>
