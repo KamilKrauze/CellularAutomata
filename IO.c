@@ -3,51 +3,55 @@
 #include <stdbool.h>
 
 #include "io.h"
-#include "grid1d.c"
-#include "grid2d.c"
+#include "grid.h"
 
-int write1DToFile(Grid1D *gridPtr){
-    if (gridPtr==NULL)
+int write1DToFile(Grid1D *gridPtr)
+{
+    if (gridPtr == NULL)
     {
         return INVALID_INPUT_PARAMETER;
     }
     FILE *fptr;
-    fptr = fopen("saved1D.txt","w");
+    fptr = fopen("saved1D.txt", "w");
     if (fptr == NULL)
     {
         return FILE_IO_ERROR;
     }
-    
+
+    fprintf(fptr, "%d\n%s", grid1dColCount, ",");
     for (int i = 0; i < grid1dColCount; i++)
     {
-        fprintf(fptr,"%s",gridPtr->row[i],",");
-    }  
+        (int) gridPtr->row[i];
+        fprintf(fptr, "%d\n%s", gridPtr->row[i], ",");
+    }
     fclose(fptr);
     return SUCCESS;
 }
 
-int read1DFromFile(){
+int read1DFromFile()
+{
     Grid1D *grid = initialize1DGrid(0);
     FILE *fptr;
-    fptr = fopen("saved1D.txt","r");
-    if (fptr == NULL);
+    fptr = fopen("saved1D.txt", "r");
+    if (fptr == NULL)
     {
         return FILE_IO_ERROR;
     }
-    
+
     for (int i = 0; i < grid1dColCount; i++)
     {
-        fscanf(fptr, "%1d,",grid->row[i]);
+        fscanf(fptr, "%hhd\n%s", &grid->row[i],",");
     }
 }
 
-int write2DToFile(Grid2D *gridPtr){
-    if (gridPtr==NULL)
+int write2DToFile(Grid2D *gridPtr)
+{
+    if (gridPtr == NULL)
     {
         return INVALID_INPUT_PARAMETER;
     }
     FILE *fptr;
-    fptr = fopen("saved2D.txt","w");
+    fptr = fopen("saved2D.txt", "w");
     if (fptr == NULL)
     {
         return FILE_IO_ERROR;
@@ -56,27 +60,31 @@ int write2DToFile(Grid2D *gridPtr){
     {
         for (int y = 0; y < grid2dColCount; y++)
         {
-            fprintf(fptr,"%s",gridPtr->table[x][y],",");
+            fprintf(fptr, "%s\n%s", &gridPtr->table[x][y], ",");
         }
-        fprintf(fptr,"%s","\n");
+        fprintf(fptr, "%s", "\n");
     }
+    free2DGrid(gridPtr);
     return SUCCESS;
 }
-int read2DFromFile(){
+int read2DFromFile()
+{
     Grid2D *grid = initialize2DGrid(0);
     FILE *fptr;
-    fptr = fopen("saved2D.txt","r");
-    if (fptr == NULL);
+    fptr = fopen("saved2D.txt", "r");
+    if (fptr == NULL)
     {
         return FILE_IO_ERROR;
     }
-    
+
     for (int x = 0; x < grid2dRowCount; x++)
     {
         for (int y = 0; y < grid2dColCount; y++)
         {
-            fscanf(fptr, "%1d,",grid->table[x][y]);
+            fscanf(fptr, "%hhd,", &grid->table[x][y]);
         }
-        fscanf(fptr,"%s","\n");
+        fprintf(fptr, "%s", "\n");
     }
+    free2DGrid(grid);
+    return SUCCESS;
 }

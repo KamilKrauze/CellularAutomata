@@ -6,33 +6,35 @@
 
 #include <stdio.h>
 
+#include "menu.h"
 #include "binConv.h"
+#include "IO.c"
+#include "IO.h"
 
 int main()
 {
-	/**
-	 * Binary conversion test.
-	 * 
-	 * Uncomment for testing purposes
-	 */
-
-	BinaryNumber* binNumber = createBinaryNumber('x');
-	displayBinaryNumber(binNumber);
-	printf("%d\n", convertBINtoDEC(binNumber));
-	char str[bitSize+1] = "xoooxxox";
-	BinStringtoBinaryNumber(str, binNumber);
-	convertDECtoBIN(binNumber, 32);
-	displayBinaryNumber(binNumber);
-	printf("%d\n", convertBINtoDEC(binNumber));
-	char str2[bitSize+1] = "xx";
-	BinaryNumbertoBinString(str2, binNumber);
-	printf("%s\n", str2);
-	convertDECtoBIN(binNumber, 64);
-	displayBinaryNumber(binNumber);
-
-	saveBinaryToFile("test.txt", binNumber, 101);
-
-	freeBinaryNumber(binNumber);
-
+	int test = read1DFromFile();
+	if (test=100)
+	{
+		printf("%s","Read 1D was successful");
+	}
+	int **test1 = read2DFromFile;
+	(int) **test1;
+	if (test=100)
+	{
+		printf("%s","Read 2D was successful");
+	}
+	Grid1D *grid1d = initialize1DGrid(1);
+	if (test=100)
+	{
+		printf("%s","Write 2D was successful");
+	}
+	Grid2D *grid = initialize2DGrid(1);
+	int test2 = write2DToFile;
+	if (test=100)
+	{
+		printf("%s","Write 2D was successful");
+	}
+	
 	return 0;
 }
