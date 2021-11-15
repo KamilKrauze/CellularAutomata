@@ -1,8 +1,22 @@
+/**
+ * Student Name: Vojtech Loskot
+ * Matric Number: 2424633
+ * 
+ */
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdbool.h>
 
+// Add sleep function into program - https://stackoverflow.com/questions/14818084/what-is-the-proper-include-for-the-function-sleep - 11/11/2021
+#ifdef _WIN32
+#include <Windows.h>
+#else
+#include <unistd.h>
+#endif
+
 #include "grid.h"
+
+
 
 // DONE
 int grid1dColCount = 15;
@@ -136,6 +150,7 @@ int runSimulation1d(Grid1D *gridPtr, Ruleset ruleset, bool wrapAroundEdges, int 
     {
         getNextGeneration1D(gridPtr, ruleset, wrapAroundEdges);
         display1DGrid(gridPtr);
+        sleep(.5);
     }
     printf("End of simulation");
     return SUCCESS;

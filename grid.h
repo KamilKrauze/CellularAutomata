@@ -1,3 +1,8 @@
+/**
+ * Student Name: Vojtech Loskot
+ * Matric Number: 2424633
+ * 
+ */
 #include <stdbool.h>
 
 #define SUCCESS 100
@@ -14,11 +19,16 @@
 #define EMPTY_CELL '0'
 #define FULL_CELL '1'
 
-// #define EMPTY_CELL_SYMBOL 'x'
-// #define FULL_CELL_SYMBOL 'o'
+// #define EMPTY_CELL_SYMBOL '0'
+// #define FULL_CELL_SYMBOL '1'
 
 #define COL_COUNT 15
 #define ROW_COUNT 5
+
+extern int grid1dColCount;
+extern int grid2dColCount;
+extern int grid2dRowCount;
+
 
 typedef char Cell;
 
@@ -53,6 +63,7 @@ void printValueOfCell(Cell value);
 
 int displayRuleset1D(Ruleset ruleset);
 int displayRuleset2D(Ruleset2D ruleset);
+Ruleset2D* initialize2DRuleset();
 
 Grid1D *initialize1DGrid(Cell defaultValue);
 

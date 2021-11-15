@@ -1,3 +1,8 @@
+/**
+ * Student Name: Vojtech Loskot
+ * Matric Number: 2424633
+ * 
+ */
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdbool.h>
@@ -37,6 +42,10 @@ Grid2D *initialize2DGrid(Cell defaultValue)
         }
     }
     // (void)defaultValue;
+    updateGrid2D(gridPtr, (grid2dRowCount / 2) - 1, (grid2dColCount / 2) - 1, FULL_CELL);
+    updateGrid2D(gridPtr, (grid2dRowCount / 2) - 1, (grid2dColCount / 2) + 1, FULL_CELL);
+    updateGrid2D(gridPtr, (grid2dRowCount / 2) + 1, (grid2dColCount / 2) - 1, FULL_CELL);
+    updateGrid2D(gridPtr, (grid2dRowCount / 2) + 1, (grid2dColCount / 2) + 1, FULL_CELL);
     Cell cell;
     getValueGrid2D(gridPtr, &cell, 0, 0);
     printf("Test %c, \n", cell);
@@ -155,7 +164,6 @@ int calculateAdjacentCells(Grid2D *gridPtr, int i, int j, bool wrapAroundEdges)
     return liveAdjacentCells;
 }
 
-
 // https://stackoverflow.com/questions/13284033/copying-structure-in-c-with-assignment-instead-of-memcpy
 Grid2D *getGrid2DCopy(Grid2D *gridPtr)
 {
@@ -228,20 +236,14 @@ int runSimulation2d(Grid2D *gridPtr, Ruleset2D ruleset, bool wrapAroundEdges, in
     return SUCCESS;
 }
 
-bool conwaysGameOfLifeRules[2][9] = {
-    {0, 0, 0, 1, 0, 0, 0, 0, 0},
-    {0, 0, 1, 1, 0, 0, 0, 0, 0},
-};
+// bool conwaysGameOfLifeRules[2][9] = {
+//     {0, 0, 0, 1, 0, 0, 0, 0, 0},
+//     {0, 0, 1, 1, 0, 0, 0, 0, 0},
+// };
 
 int runConwaysGameOfLife(Grid2D *gridPtr, int numberOfGenerations, bool wrapEdges)
 {
-    Ruleset2D *ruleset2D = (Ruleset2D *)malloc(sizeof(Ruleset2D));
-
-    for (int i = 0; i < 8; i++)
-    {
-        ruleset2D->rulesetForDeadCells[i] = conwaysGameOfLifeRules[0][i];
-        ruleset2D->rulesetForAliveCells[i] = conwaysGameOfLifeRules[1][i];
-    }
+    Ruleset2D *ruleset2D = initialize2DRuleset();
 
     printf("Starting Conways game of life\n");
 
@@ -253,7 +255,7 @@ int runConwaysGameOfLife(Grid2D *gridPtr, int numberOfGenerations, bool wrapEdge
         display2DGrid(gridPtr);
     }
 
-    printf("End of simulation\n");
+    printf("End of simulation\n\n");
     // (void) rulesetForDeadCells;
     free(ruleset2D);
 

@@ -1,3 +1,8 @@
+/**
+ * Student Name: Vojtech Loskot
+ * Matric Number: 2424633
+ * 
+ */
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdbool.h>
@@ -163,4 +168,26 @@ int displayRuleset2D(Ruleset2D ruleset)
     helperDisplayFunction(ruleset.rulesetForDeadCells);
 
     return SUCCESS;
+}
+
+bool conwaysGameOfLifeRules[2][9] = {
+    {0, 0, 0, 1, 0, 0, 0, 0, 0},
+    {0, 0, 1, 1, 0, 0, 0, 0, 0},
+};
+
+Ruleset2D *initialize2DRuleset()
+{
+
+    Ruleset2D *ruleset2D = (Ruleset2D *)malloc(sizeof(Ruleset2D));
+    if (ruleset2D == NULL)
+    {
+        printf("MEMORY ALLOCATION ERROR");
+        return NULL;
+    }
+    for (int i = 0; i < 8; i++)
+    {
+        ruleset2D->rulesetForDeadCells[i] = conwaysGameOfLifeRules[0][i];
+        ruleset2D->rulesetForAliveCells[i] = conwaysGameOfLifeRules[1][i];
+    }
+    return ruleset2D;
 }
