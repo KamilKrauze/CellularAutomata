@@ -21,7 +21,6 @@
 #include "binConv.h"
 #include "IO.h"
 
-
 void displayMenu()
 {
 	printf("========================================\n");
@@ -165,7 +164,7 @@ void displayMenu_1D()
 	printf("\t6. - Exit to main menu\n");
 }
 
-Ruleset* pGlobalRulset1D = NULL;
+Ruleset *pGlobalRulset1D = NULL;
 
 void determineChoice_1D()
 {
@@ -174,10 +173,10 @@ void determineChoice_1D()
 	bool option2Valid = false;
 	bool option3Valid = false;
 
-	Grid1D* pGrid1D = initialize1DGrid(EMPTY_CELL);
-	BinaryNumber* binNumber = createBinaryNumber('x', 8);
-	
-	if(pGlobalRulset1D == NULL)
+	Grid1D *pGrid1D = initialize1DGrid(EMPTY_CELL);
+	BinaryNumber *binNumber = createBinaryNumber('x', 8);
+
+	if (pGlobalRulset1D == NULL)
 		pGlobalRulset1D = initialize1DRuleset();
 
 	while (usrChoice != -1)
@@ -230,7 +229,7 @@ void determineChoice_1D()
 					continue;
 			}
 
-		break;
+			break;
 		case 2: // Alter rule set
 
 			parseBinaryInput(8, binNumber);
@@ -238,13 +237,13 @@ void determineChoice_1D()
 			BinaryNumbertoBinString(str, binNumber);
 			for (int i = 0; i < 8; ++i)
 			{
-				if(str[i] == '0')
+				if (str[i] == '0')
 					pGlobalRulset1D->ruleArray[i] = 0;
 				else if (str[i] == '1')
 					pGlobalRulset1D->ruleArray[i] = 1;
 			}
 
-		break;
+			break;
 		case 3: // Run Simulation
 			clear();
 			int userIn = -1;
@@ -252,16 +251,16 @@ void determineChoice_1D()
 			int genNumber = 0;
 			float time = 0;
 
-			while(option1Valid != true)
+			while (option1Valid != true)
 			{
 				printf("Please enter the number of generations you would like to simulate: ");
 				scanf("%d", &genNumber);
 
-				if(genNumber > 0)
+				if (genNumber > 0)
 					option1Valid = true;
 			}
 
-			while(option2Valid != true)
+			while (option2Valid != true)
 			{
 				printf("Would like for it to wrap around the edges? \n(1 for yes, 0 for no)\n");
 				printf("User: ");
@@ -269,27 +268,27 @@ void determineChoice_1D()
 
 				switch (userIn)
 				{
-					case 1:
-						wrapEdges = true;
-						option2Valid = true;
+				case 1:
+					wrapEdges = true;
+					option2Valid = true;
 					break;
-					case 0:
-						wrapEdges = false;
-						option2Valid = true;
+				case 0:
+					wrapEdges = false;
+					option2Valid = true;
 					break;
-					default:
-						clear();
+				default:
+					clear();
 					break;
 				}
 			}
 
-			while(option3Valid != true)
+			while (option3Valid != true)
 			{
 				printf("How long would you like to run the simulation for?\nProvide the time in seconds (0.01 for millieseconds), 0 to skip step-by-step results till end of simulation\n");
 				printf("User: ");
 				scanf("%f", &time);
 
-				if(time >= 0)
+				if (time >= 0)
 				{
 					option3Valid = true;
 				}
@@ -299,17 +298,17 @@ void determineChoice_1D()
 
 			runSimulation1d(pGrid1D, *pGlobalRulset1D, wrapEdges, genNumber, time);
 
-		break;
+			break;
 		case 4: //Read  1D grid from file
 			pGrid1D = read1DFromFile();
-		break;
+			break;
 		case 5: //Write 1D grid from file
 			write1DToFile(pGrid1D);
-		break;
+			break;
 		case 6: // Exit Program
 			usrChoice = -1;
 			determineChoice_MainMenu();
-		break;
+			break;
 		default:
 			clear();
 			displayMenu_1D();
@@ -369,7 +368,7 @@ void determineChoice_2D()
 			free2DGrid(gridPtr);
 			gridPtr = initialize2DGrid(EMPTY_CELL);
 
-		break;
+			break;
 		case 2:
 			clear();
 			printf("========================================\n");
@@ -430,7 +429,7 @@ void determineChoice_2D()
 			// int number1;
 			// scanf("%d", &number1);
 
-		break;
+			break;
 		case 3: // Run Simulation
 			clear();
 			printf("========================================\n");
@@ -457,22 +456,31 @@ void determineChoice_2D()
 			wrapAroundEdges = wrapAroundEdgesInt;
 			// runSimulation1d(pGrid1D, ruleset1D, false, 10);
 			runSimulation2d(gridPtr, *globalRuleset2dPtr, wrapAroundEdges, numberOfGenerations);
-		break;
+
+			printf("Simulation done, type anything to continue.\n");
+			int useless;
+			scanf("%d", &useless);
+			break;
 		case 4: //Read  1D grid from file
+			free2DGrid(gridPtr);
 			gridPtr = read2DFromFile();
-		break;
-		case 5: //Write 1D grid from file
+			break;
+		case 5: //Write 1D grid to file
+			clear();
 			write2DToFile(gridPtr);
-		break;
+			printf("Saved to file saved2D.txt\n");
+			// sleep(100);
+			break;
 		case 6: // Exit Program
 			usrChoice = -1;
+			free2DGrid(gridPtr);
 			free(globalRuleset2dPtr);
-		break;
-		break;
+			break;
+			break;
 		default:
 			clear();
 			// displayMenu_1D();
-		break;
+			break;
 		}
 	}
 }
