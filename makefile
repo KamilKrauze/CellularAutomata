@@ -1,4 +1,4 @@
-main: ./binConv.c ./grid.c ./grid1d.c ./grid2d.c ./IO.c ./itoa.c ./main.c ./menu.c ./system.c ./tester.c
-	gcc -g -Wall -Wextra -Werror -o main ./binConv.c ./grid.c ./grid1d.c ./grid2d.c ./IO.c ./itoa.c ./main.c ./menu.c ./system.c ./tester.c
+main: ./grid.c ./grid1d.c ./itoa.c ./grid2d.c ./system.c ./tester.c ./binConv.c ./main.c ./IO.c ./menu.c
+	gcc -g -Wall -Wextra -Werror -o main ./grid.c ./grid1d.c ./itoa.c ./grid2d.c ./system.c ./tester.c ./binConv.c ./main.c ./IO.c ./menu.c
 clean:
 	rm -f -r main
