@@ -1,4 +1,5 @@
 #include <stdbool.h>
+#include "grid.h"
 
 #define SUCCESS 100
 #define INVALID_INPUT_PARAMETER 101
