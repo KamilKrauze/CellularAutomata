@@ -4,6 +4,7 @@
 
 #include "IO.h"
 
+
 int write1DToFile(Grid1D *gridPtr)
 {
     if (gridPtr == NULL)
