@@ -17,6 +17,7 @@
 #include "grid.h"
 #include "menu.h"
 #include "binConv.h"
+#include "IO.h"
 
 
 void displayMenu()
@@ -149,7 +150,9 @@ void displayMenu_1D()
 	printf("\t1. - Change 1D Grid size. Current number of fields: %d\n", grid1dColCount);
 	printf("\t2. - Change ruleset\n");
 	printf("\t3. - Run Simulation\n");
-	printf("\t4. - Exit to main menu\n");
+	printf("\t4. - Read grid from save file\n");
+	printf("\t5. - Write grid to save file\n");
+	printf("\t6. - Exit to main menu\n");
 }
 
 void determineChoice_1D()
@@ -235,7 +238,11 @@ void determineChoice_1D()
 			clear();
 			//runSimulation1d(pGrid1D, ruleset1D, false, 10);
 			break;
-		case 4: // Exit Program
+		case 4: //Read  1D grid from file
+			pGrid1D = read1DFromFile();
+		case 5: //Write 1D grid from file
+			write1DToFile(pGrid1D);
+		case 6: // Exit Program
 			usrChoice = -1;
 			break;
 		default:
@@ -254,6 +261,8 @@ void displayMenu_2D()
 	printf("\t1. - Change 2D Grid size. Current number of rows is %d and columns %d\n", grid2dRowCount, grid2dColCount);
 	printf("\t2. - Change ruleset\n");
 	printf("\t3. - Run Simulation\n");
+	printf("\t4. - Read grid from save file\n");
+	printf("\t5. - Write grid to save file\n");
 	printf("\t4. - Exit to main menu\n");
 }
 
@@ -384,7 +393,11 @@ void determineChoice_2D()
 			// runSimulation1d(pGrid1D, ruleset1D, false, 10);
 			runSimulation2d(gridPtr, *globalRuleset2dPtr, wrapAroundEdges, numberOfGenerations);
 			break;
-		case 4: // Exit Program
+		case 4: //Read  1D grid from file
+			gridPtr = read2DFromFile();
+		case 5: //Write 1D grid from file
+			write2DToFile(gridPtr);
+		case 6: // Exit Program
 			usrChoice = -1;
 			free(globalRuleset2dPtr);
 			break;
