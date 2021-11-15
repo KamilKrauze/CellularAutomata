@@ -159,6 +159,8 @@ void determineChoice_1D()
 {
 	int usrChoice = 0;
 	Grid1D *pGrid1D = initialize1DGrid(EMPTY_CELL);
+	BinaryNumber* binNumber = createBinaryNumber('x');
+	int choice = 0;
 
 	while (usrChoice != -1)
 	{
@@ -203,7 +205,33 @@ void determineChoice_1D()
 			}
 
 			break;
-		case 2:
+		case 2: // Alter rule set
+			printf("Are you going to enter a \n1. - DEC \nor \n2. - BIN value?");
+			while(choice != -1)
+			{
+				if(choice == 1)
+				{
+					int DECnumber = -1;
+					
+					while(true)
+					{
+						printf("\nPlease enter a number between 0-255: ");
+						scanf("%d", &DECnumber);
+						if(DECnumber >= 0 && DECnumber <= 255)
+						{
+							convertDECtoBIN(binNumber, DECnumber);
+							break;
+						}
+					}
+				}
+				else if(choice == 2)
+				{
+					char binString[bitSize];
+					printf("Please enter a binary number (x or o): ");
+					scanf("%s", binString);
+					BinStringtoBinaryNumber(binString, binNumber);
+				}
+			}
 
 			break;
 		case 3: // Run Simulation
