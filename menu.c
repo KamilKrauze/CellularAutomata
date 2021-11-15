@@ -115,25 +115,34 @@ void determineChoice_BinConv()
 
 		case 5: // Save binary number to text file
 			clear();
-			char *filepath = (char *)malloc(sizeof(char));
-			if (filepath == NULL)
+			char *filepath1 = (char *)malloc(sizeof(char));
+			if (filepath1 == NULL)
 			{
 				printf("Memory allocation error. Please try again");
 			}
 			printf("Please enter a file path.\nData will be appended to a file that exists\nIf the file does not exist a new one will be created with the provided name.\nExample: ../filename.txt\n");
-			scanf("%s", filepath);
-			saveBinaryToFile(filepath, binNumber, DECnumber);
+			scanf("%s", filepath1);
+			saveBinaryToFile(filepath1, binNumber, DECnumber);
+			free(filepath1);
 			break;
 
 		case 6: // Get binary number from file
 			clear();
-
-			break;
+			char *filepath2 = (char *)malloc(sizeof(char));
+			if (filepath2 == NULL)
+			{
+				printf("Memory allocation error. Please try again");
+			}
+			printf("Please enter a file path.\nData will be appended to a file that exists\nIf the file does not exist a new one will be created with the provided name.\nExample: ../filename.txt\n");
+			scanf("%s", filepath2);
+			readBinaryFromFile(filepath2, binNumber, DECnumber);
+			free(filepath2);
+		break;
 
 		case 7: // Exit bin converter
 			free(binNumber);
 			usrChoice = -1;
-			break;
+		break;
 
 		default:
 			clear();
