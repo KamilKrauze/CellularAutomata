@@ -21,8 +21,8 @@ int write1DToFile(Grid1D *gridPtr)
     fprintf(fptr, "%d\n%s", grid1dColCount, ",");
     for (int i = 0; i < grid1dColCount; i++)
     {
-        (int) gridPtr->row[i];
-        fprintf(fptr, "%d\n%s", gridPtr->row[i], ",");
+        // (int) gridPtr->row[i];
+        fprintf(fptr, "%d\n%s", (int)gridPtr->row[i], ",");
     }
     fclose(fptr);
     return SUCCESS;
@@ -40,8 +40,9 @@ int read1DFromFile()
 
     for (int i = 0; i < grid1dColCount; i++)
     {
-        fscanf(fptr, "%hhd\n%s", &grid->row[i],",");
+        fscanf(fptr, "%hhd\n", &grid->row[i]);
     }
+    return SUCCESS;
 }
 
 int write2DToFile(Grid2D *gridPtr)
