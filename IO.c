@@ -37,6 +37,7 @@ int read1DFromFile()
     {
         return FILE_IO_ERROR;
     }
+    fscanf(fptr, "%d\n", &grid1dColCount);
 
     for (int i = 0; i < grid1dColCount; i++)
     {
