@@ -3,8 +3,6 @@
 #include <stdbool.h>
 
 #include "io.h"
-#include "grid.h"
-
 
 int write1DToFile(Grid1D *gridPtr)
 {
