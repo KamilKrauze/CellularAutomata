@@ -318,7 +318,8 @@ void displayMenu_2D()
 	printf("\t3. - Run Simulation\n");
 	printf("\t4. - Read grid from save file\n");
 	printf("\t5. - Write grid to save file\n");
-	printf("\t4. - Exit to main menu\n");
+	printf("\t6. - Reset ruleset to Conways game of life\n");
+	printf("\t7. - Exit to main menu\n");
 }
 
 Ruleset2D *globalRuleset2dPtr = NULL;
@@ -462,11 +463,14 @@ void determineChoice_2D()
 			printf("Saved to file saved2D.txt\n");
 			// sleep(100);
 			break;
-		case 6: // Exit Program
+		case 6: // Initialize ruleset to Cons GoL
+			free(globalRuleset2dPtr);
+			globalRuleset2dPtr = initialize2DRuleset();
+			break;
+		case 7: // Exit Program
 			usrChoice = -1;
 			free2DGrid(gridPtr);
 			free(globalRuleset2dPtr);
-			break;
 			break;
 		default:
 			clear();
