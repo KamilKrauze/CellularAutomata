@@ -8,7 +8,6 @@
  * Matric Number: 2424633
  * 
  */
-// #define bitSize 8
 
 typedef struct bit
 {
@@ -31,6 +30,7 @@ int convertBINtoDEC(BinaryNumber* binNumber);
 int convertDECtoBIN(BinaryNumber* binNumber, int decimalNumber);
 
 int saveBinaryToFile(const char* filepath, BinaryNumber* binNumber, int decimalNumber);
+int readBinaryFromFile(const char* filepath, BinaryNumber* binNumber, int decimalNumber);
 
 int parseBinaryInput(int numberOfBits, BinaryNumber *output);
 // int binaryNumberToRuleset

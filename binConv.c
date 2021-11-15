@@ -162,6 +162,24 @@ int saveBinaryToFile(const char *filepath, BinaryNumber *binNumber, int decimalN
 	return 100;
 }
 
+int readBinaryFromFile(const char* filepath, BinaryNumber* binNumber, int decimalNumber)
+{
+	if (filepath == NULL)
+		return 101;
+
+	FILE* fp = fopen(filepath, "r");
+	if (fp == NULL)
+	{
+		char* binaryString = (char *)malloc(sizeof(char) * (binNumber->numberOfBits));
+		fscanf(fp, "%s %d",binaryString, &decimalNumber);
+		BinStringtoBinaryNumber(binaryString, binNumber);
+
+		fclose(fp);
+		free(binaryString);
+	}
+	return 100;
+}
+
 int parseBinaryInput(int numberOfBits, BinaryNumber *output)
 {
 	int numberInput;
