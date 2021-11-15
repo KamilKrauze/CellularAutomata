@@ -63,6 +63,8 @@ void printValueOfCell(Cell value);
 
 int displayRuleset1D(Ruleset ruleset);
 int displayRuleset2D(Ruleset2D ruleset);
+
+Ruleset *initialize1DRuleset();
 Ruleset2D* initialize2DRuleset();
 
 Grid1D *initialize1DGrid(Cell defaultValue);
@@ -85,7 +87,7 @@ int getNextGeneration1D(Grid1D *gridPtr, Ruleset ruleset, bool wrapAroundEdges);
 
 int getNextGeneration2D(Grid2D *gridPtr, Ruleset2D ruleset, bool wrapAroundEdges);
 
-int runSimulation1d(Grid1D *gridPtr, Ruleset ruleset, bool wrapAroundEdges, int numberOfGenerations);
+int runSimulation1d(Grid1D *gridPtr, Ruleset ruleset, bool wrapAroundEdges, int numberOfGenerations, float time);
 
 int runSimulation2d(Grid2D *gridPtr, Ruleset2D ruleset, bool wrapAroundEdges, int numberOfGenerations);
 
