@@ -1,3 +1,8 @@
+/**
+ * Student Name: Vojtech Loskot
+ * Matric Number: 2424633
+ * 
+ */
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdbool.h>
