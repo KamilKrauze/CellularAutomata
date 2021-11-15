@@ -2,6 +2,9 @@
  * Student Name: Vojtech Loskot
  * Matric Number: 2424633
  * 
+ * Student Name: Kamil Krauze
+ * Matric Number: 2414951
+ * 
  */
 #include <stdlib.h>
 #include <stdio.h>
@@ -14,6 +17,7 @@
 #include <unistd.h>
 #endif
 
+#include "system.h"
 #include "grid.h"
 
 
@@ -83,6 +87,29 @@ static int rulesetTemplate[8][3] = {
     {0, 0, 0},
 };
 
+Ruleset *initialize1DRuleset()
+{
+
+    Ruleset* ruleset1D = (Ruleset*)malloc(sizeof(Ruleset));
+    if (ruleset1D == NULL)
+    {
+        printf("MEMORY ALLOCATION ERROR");
+        return NULL;
+    }
+    
+    // Default rule set
+    ruleset1D->ruleArray[0] = 0;
+    ruleset1D->ruleArray[1] = 0;
+    ruleset1D->ruleArray[2] = 0;
+    ruleset1D->ruleArray[3] = 1;
+    ruleset1D->ruleArray[4] = 1;
+    ruleset1D->ruleArray[5] = 1;
+    ruleset1D->ruleArray[6] = 1;
+    ruleset1D->ruleArray[7] = 0;
+
+    return ruleset1D;
+}
+
 int getNextGeneration1D(Grid1D *gridPtr, Ruleset ruleset, bool wrapAroundEdges)
 {
     (void)ruleset;
@@ -143,16 +170,17 @@ int getNextGeneration1D(Grid1D *gridPtr, Ruleset ruleset, bool wrapAroundEdges)
     return SUCCESS;
 }
 
-int runSimulation1d(Grid1D *gridPtr, Ruleset ruleset, bool wrapAroundEdges, int numberOfGenerations)
+int runSimulation1d(Grid1D *gridPtr, Ruleset ruleset, bool wrapAroundEdges, int numberOfGenerations, float time)
 {
     display1DGrid(gridPtr);
     for (int i = 0; i < numberOfGenerations; i++)
     {
+        clear();
         getNextGeneration1D(gridPtr, ruleset, wrapAroundEdges);
         display1DGrid(gridPtr);
-        sleep(.5);
+        sleep(time);
     }
-    printf("End of simulation");
+    printf("End of simulation\n");
     return SUCCESS;
 }
     

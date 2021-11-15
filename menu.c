@@ -2,6 +2,9 @@
  * Student Name: Vojtech Loskot
  * Matric Number: 2424633
  * 
+ * Student Name: Kamil Krauze
+ * Matric Number: 2414951
+ * 
  */
 #include <stdio.h>
 #include <stdlib.h>
@@ -122,7 +125,6 @@ void determineChoice_BinConv()
 			printf("Please enter a file path.\nData will be appended to a file that exists\nIf the file does not exist a new one will be created with the provided name.\nExample: ../filename.txt\n");
 			scanf("%s", filepath);
 			saveBinaryToFile(filepath, binNumber, DECnumber);
-
 			break;
 
 		case 6: // Get binary number from file
@@ -155,12 +157,20 @@ void displayMenu_1D()
 	printf("\t6. - Exit to main menu\n");
 }
 
+Ruleset* pGlobalRulset1D = NULL;
+
 void determineChoice_1D()
 {
 	int usrChoice = 0;
-	Grid1D *pGrid1D = initialize1DGrid(EMPTY_CELL);
-	BinaryNumber *binNumber = createBinaryNumber('x', 8);
-	int choice = 0;
+	bool option1Valid = false;
+	bool option2Valid = false;
+	bool option3Valid = false;
+
+	Grid1D* pGrid1D = initialize1DGrid(EMPTY_CELL);
+	BinaryNumber* binNumber = createBinaryNumber('x', 8);
+	
+	if(pGlobalRulset1D == NULL)
+		pGlobalRulset1D = initialize1DRuleset();
 
 	while (usrChoice != -1)
 	{
@@ -168,6 +178,7 @@ void determineChoice_1D()
 
 		displayMenu_1D();
 		display1DGrid(pGrid1D);
+		displayRuleset1D(*pGlobalRulset1D);
 
 		printf("User: ");
 		scanf("%d", &usrChoice);
@@ -179,7 +190,8 @@ void determineChoice_1D()
 
 			int colNo = -1;
 			int cellVal = -1;
-			while (true)
+			bool assigned = false;
+			while (assigned != true)
 			{
 				if (colNo == -1)
 				{
@@ -196,9 +208,15 @@ void determineChoice_1D()
 				if (colNo != -1 && (cellVal == 1 || cellVal == 0))
 				{
 					if (cellVal == 1)
+					{
 						updateGrid1D(pGrid1D, colNo, FULL_CELL);
+						assigned = true;
+					}
 					else
+					{
 						updateGrid1D(pGrid1D, colNo, EMPTY_CELL);
+						assigned = true;
+					}
 				}
 				else
 					continue;
@@ -206,32 +224,72 @@ void determineChoice_1D()
 
 			break;
 		case 2: // Alter rule set
-			printf("Are you going to enter a \n1. - DEC \nor \n2. - BIN value?");
-			while (choice != -1)
-			{
-				if (choice == 1)
-				{
-					int DECnumber = -1;
 
-					while (true)
-					{
-						printf("\nPlease enter a number between 0-255: ");
-						scanf("%d", &DECnumber);
-						if (DECnumber >= 0 && DECnumber <= 255)
-						{
-							convertDECtoBIN(binNumber, DECnumber);
-							break;
-						}
-					}
-				}
-				else if (choice == 2)
+			parseBinaryInput(8, binNumber);
+			char str[8];
+			BinaryNumbertoBinString(str, binNumber);
+			for (int i = 0; i < 8; ++i)
+			{
+				if(str[i] == '0')
+					pGlobalRulset1D->ruleArray[i] = 0;
+				else if (str[i] == '1')
+					pGlobalRulset1D->ruleArray[i] = 1;
+			}
+
+			break;
+		case 3: // Run Simulation
+			clear();
+			int userIn = -1;
+			bool wrapEdges = false;
+			int genNumber = 0;
+			float time = 0;
+
+			while(option1Valid != true)
+			{
+				printf("Please enter the number of generations you would like to simulate: ");
+				scanf("%d", &genNumber);
+
+				if(genNumber > 0)
+					option1Valid = true;
+			}
+
+			while(option2Valid != true)
+			{
+				printf("Would like for it to wrap around the edges? \n(1 for yes, 0 for no)\n");
+				printf("User: ");
+				scanf("%d", &userIn);
+
+				switch (userIn)
 				{
-					char binString[8];
-					printf("Please enter a binary number (x or o): ");
-					scanf("%s", binString);
-					BinStringtoBinaryNumber(binString, binNumber);
+					case 1:
+						wrapEdges = true;
+						option2Valid = true;
+					break;
+					case 0:
+						wrapEdges = false;
+						option2Valid = true;
+					break;
+					default:
+						clear();
+					break;
 				}
 			}
+
+			while(option3Valid != true)
+			{
+				printf("How long would you like to run the simulation for?\nProvide the time in seconds (0.01 for millieseconds), 0 to skip step-by-step results till end of simulation\n");
+				printf("User: ");
+				scanf("%f", &time);
+
+				if(time >= 0)
+				{
+					option3Valid = true;
+				}
+			}
+
+			option1Valid = option2Valid = option3Valid = false;
+
+			runSimulation1d(pGrid1D, *pGlobalRulset1D, wrapEdges, genNumber, time);
 
 			break;
 		case 3: // Run Simulation
@@ -244,6 +302,7 @@ void determineChoice_1D()
 			write1DToFile(pGrid1D);
 		case 6: // Exit Program
 			usrChoice = -1;
+			determineChoice_MainMenu();
 			break;
 		default:
 			clear();
