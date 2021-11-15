@@ -162,6 +162,7 @@ int saveBinaryToFile(const char *filepath, BinaryNumber *binNumber, int decimalN
 	return 100;
 }
 
+// Read binary number and decimal number from file
 int readBinaryFromFile(const char* filepath, BinaryNumber* binNumber, int decimalNumber)
 {
 	if (filepath == NULL)
@@ -171,7 +172,7 @@ int readBinaryFromFile(const char* filepath, BinaryNumber* binNumber, int decima
 	if (fp == NULL)
 	{
 		char* binaryString = (char *)malloc(sizeof(char) * (binNumber->numberOfBits));
-		fscanf(fp, "%s %d",binaryString, &decimalNumber);
+		fscanf(fp, "%s = %d",binaryString, &decimalNumber);
 		BinStringtoBinaryNumber(binaryString, binNumber);
 
 		fclose(fp);
