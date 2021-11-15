@@ -37,7 +37,7 @@ int read1DFromFile()
     {
         return FILE_IO_ERROR;
     }
-    fscanf(fptr, "%d\n", &grid1dColCount);
+    fscanf(fptr, "%d", &grid1dColCount);
 
     for (int i = 0; i < grid1dColCount; i++)
     {
@@ -58,6 +58,7 @@ int write2DToFile(Grid2D *gridPtr)
     {
         return FILE_IO_ERROR;
     }
+    fprintf(fptr,"%ls\n%ls", &grid2dRowCount, &grid2dColCount);
     for (int x = 0; x < grid2dRowCount; x++)
     {
         for (int y = 0; y < grid2dColCount; y++)
@@ -78,7 +79,7 @@ int read2DFromFile()
     {
         return FILE_IO_ERROR;
     }
-
+    fscanf(fptr, "%d\n%d", &grid2dRowCount, &grid2dColCount);
     for (int x = 0; x < grid2dRowCount; x++)
     {
         for (int y = 0; y < grid2dColCount; y++)
