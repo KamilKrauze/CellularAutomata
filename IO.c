@@ -1,10 +1,10 @@
-// #include <stdlib.h>
-// #include <stdio.h>
-// #include <stdbool.h>
-
+#include <stdlib.h>
+#include <stdio.h>
+#include <stdbool.h>
 
 #include "io.h"
 #include "grid.h"
+
 
 int write1DToFile(Grid1D *gridPtr)
 {
@@ -19,29 +19,40 @@ int write1DToFile(Grid1D *gridPtr)
         return FILE_IO_ERROR;
     }
 
-    fprintf(fptr, "%s", grid1dColCount, ",");
+    fprintf(fptr, "%d\n%s", grid1dColCount, ",");
     for (int i = 0; i < grid1dColCount; i++)
     {
-        fprintf(fptr, "%s", gridPtr->row[i], ",");
+        // (int) gridPtr->row[i];
+        fprintf(fptr, "%d\n%s", (int)gridPtr->row[i], ",");
     }
     fclose(fptr);
     return SUCCESS;
 }
 
-int read1DFromFile()
+Grid1D* read1DFromFile()
 {
-    Grid1D *grid = initialize1DGrid(0);
+    Grid1D *grid = initialize1DGrid(EMPTY_CELL);
     FILE *fptr;
     fptr = fopen("saved1D.txt", "r");
+    int size = ftell(fptr);
     if (fptr == NULL)
     {
-        return FILE_IO_ERROR;
+        printf("%s","Failed to open file, initialising new grid");
+        return grid;
     }
+    if (size == 0)
+    {
+        printf("%s","No grid is saved, initialising new grid");
+        return grid;
+    }
+    
+    fscanf(fptr, "%d", &grid1dColCount);
 
     for (int i = 0; i < grid1dColCount; i++)
     {
-        fscanf(fptr, "%1d,", grid->row[i]);
+        fscanf(fptr, "%hhd\n", &grid->row[i]);
     }
+    return grid;
 }
 
 int write2DToFile(Grid2D *gridPtr)
@@ -56,32 +67,41 @@ int write2DToFile(Grid2D *gridPtr)
     {
         return FILE_IO_ERROR;
     }
+    fprintf(fptr,"%ls\n%ls", &grid2dRowCount, &grid2dColCount);
     for (int x = 0; x < grid2dRowCount; x++)
     {
         for (int y = 0; y < grid2dColCount; y++)
         {
-            fprintf(fptr, "%s", gridPtr->table[x][y], ",");
+            fprintf(fptr, "%s\n%s", &gridPtr->table[x][y], ",");
         }
         fprintf(fptr, "%s", "\n");
     }
     return SUCCESS;
 }
-int read2DFromFile()
+Grid2D* read2DFromFile()
 {
     Grid2D *grid = initialize2DGrid(0);
     FILE *fptr;
     fptr = fopen("saved2D.txt", "r");
+    int size = ftell(fptr);
     if (fptr == NULL)
     {
-        return FILE_IO_ERROR;
+        printf("%s","Failed to open file, initialising new grid");
+        return grid;
     }
-
+    if (size == 0)
+    {
+        printf("%s","No grid is saved, initialising new grid");
+        return grid;
+    }
+    fscanf(fptr, "%d\n%d", &grid2dRowCount, &grid2dColCount);
     for (int x = 0; x < grid2dRowCount; x++)
     {
         for (int y = 0; y < grid2dColCount; y++)
         {
-            fscanf(fptr, "%1d,", grid->table[x][y]);
+            fscanf(fptr, "%hhd,", &grid->table[x][y]);
         }
-        fscanf(fptr, "%s", "\n");
+        fprintf(fptr, "%s", "\n");
     }
+    return grid;
 }
