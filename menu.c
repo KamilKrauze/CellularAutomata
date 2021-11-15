@@ -17,7 +17,6 @@
 #endif
 
 #include "system.h"
-#include "grid.h"
 #include "menu.h"
 #include "binConv.h"
 #include "IO.h"
@@ -222,7 +221,7 @@ void determineChoice_1D()
 					continue;
 			}
 
-			break;
+		break;
 		case 2: // Alter rule set
 
 			parseBinaryInput(8, binNumber);
@@ -236,7 +235,7 @@ void determineChoice_1D()
 					pGlobalRulset1D->ruleArray[i] = 1;
 			}
 
-			break;
+		break;
 		case 3: // Run Simulation
 			clear();
 			int userIn = -1;
@@ -291,19 +290,17 @@ void determineChoice_1D()
 
 			runSimulation1d(pGrid1D, *pGlobalRulset1D, wrapEdges, genNumber, time);
 
-			break;
-		case 3: // Run Simulation
-			clear();
-			//runSimulation1d(pGrid1D, ruleset1D, false, 10);
-			break;
+		break;
 		case 4: //Read  1D grid from file
 			pGrid1D = read1DFromFile();
+		break;
 		case 5: //Write 1D grid from file
 			write1DToFile(pGrid1D);
+		break;
 		case 6: // Exit Program
 			usrChoice = -1;
 			determineChoice_MainMenu();
-			break;
+		break;
 		default:
 			clear();
 			displayMenu_1D();
@@ -363,7 +360,7 @@ void determineChoice_2D()
 			free2DGrid(gridPtr);
 			gridPtr = initialize2DGrid(EMPTY_CELL);
 
-			break;
+		break;
 		case 2:
 			clear();
 			printf("========================================\n");
@@ -424,7 +421,7 @@ void determineChoice_2D()
 			// int number1;
 			// scanf("%d", &number1);
 
-			break;
+		break;
 		case 3: // Run Simulation
 			clear();
 			printf("========================================\n");
@@ -451,19 +448,22 @@ void determineChoice_2D()
 			wrapAroundEdges = wrapAroundEdgesInt;
 			// runSimulation1d(pGrid1D, ruleset1D, false, 10);
 			runSimulation2d(gridPtr, *globalRuleset2dPtr, wrapAroundEdges, numberOfGenerations);
-			break;
+		break;
 		case 4: //Read  1D grid from file
 			gridPtr = read2DFromFile();
+		break;
 		case 5: //Write 1D grid from file
 			write2DToFile(gridPtr);
+		break;
 		case 6: // Exit Program
 			usrChoice = -1;
 			free(globalRuleset2dPtr);
-			break;
+		break;
+		break;
 		default:
 			clear();
 			// displayMenu_1D();
-			break;
+		break;
 		}
 	}
 }
